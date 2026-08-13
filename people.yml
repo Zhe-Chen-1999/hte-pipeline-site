@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+# THE PEOPLE PAGE IS BUILT FROM THIS FILE.
+#
+# To add someone: copy one block below, paste it where you want them to appear,
+# and change the values. People show up on the page in the same order as here.
+#
+# Keep the leading "- " on the name line, and keep the indentation exactly as
+# shown. Only `name` and `role` are required — delete any other line you don't
+# need. Photos go in the assets/ folder, referenced as assets/filename.jpg.
+# ---------------------------------------------------------------------------
+
+- name: Michael O. Harhay, PhD, MPH
+  role: Principal Investigator
+  affiliation: Associate Professor of Epidemiology, Medicine (Pulmonary and Critical Care), and Statistics and Data Science, University of Pennsylvania
+  email: mharhay@pennmedicine.upenn.edu
+  url: https://dbei.med.upenn.edu/staff/michael-harhay-phd-mph/
+  photo: assets/michael-harhay.jpg
+
+- name: Fan Li, PhD
+  role: Co-Principal Investigator
+  affiliation: Associate Professor of Biostatistics and Associate Professor of Medicine (Cardiovascular Medicine), Yale University
+  email: fan.f.li@yale.edu
+  url: https://ysph.yale.edu/profile/fan-f-li/
+  photo: assets/fan-li.jpg
+
+- name: Zhe Chen, PhD
+  role: Postdoctoral Researcher
+  affiliation: Department of Biostatistics, Epidemiology and Informatics, University of Pennsylvania
+  email: zhe.chen@pennmedicine.upenn.edu
+  url: https://zhe-chen-1999.github.io
+  github: https://github.com/Zhe-Chen-1999
+  photo: assets/zhe-chen.jpg

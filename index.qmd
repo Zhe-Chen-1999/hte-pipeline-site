@@ -1,0 +1,74 @@
+---
+title: ""
+toc: false
+---
+
+::: {.hero}
+## Heterogeneity of treatment effect analysis for randomized trials
+
+Which patients benefit, by how much, and how confident can we be? An end-to-end
+pipeline combining Bayesian machine learning with randomization-based inference —
+published with its code, so it can be applied to your own trial.
+:::
+
+## The problem
+
+A trial reports one average treatment effect. Clinicians want to know something
+different: *does this therapy work for the patient in front of me?*
+
+Standard subgroup analysis answers a related but weaker question — which
+covariate-defined groups have different **average** effects — and does so one
+binary split at a time, with limited power and a multiplicity problem.
+
+This pipeline attacks the question from two directions at once, and keeps them
+clearly separated.
+
+## Two complementary approaches
+
+::: {.card-grid}
+
+::: {.analysis-card}
+### Model-based
+
+**Parts I–III.** Bayesian Additive Regression Trees estimate a conditional
+average treatment effect for every patient. A regression tree is then fitted *to*
+those estimates, turning a per-patient vector into interpretable, covariate-defined
+subgroups. Sensitivity analyses check the result against the BART priors and
+against other estimators.
+
+Answers: *which measured covariates drive the effect?*
+:::
+
+::: {.analysis-card}
+### Randomization-based
+
+**Part IV.** Confidence bounds on the quantiles of the individual treatment
+effects, using no outcome model at all — only the trial's own randomization.
+Finite-sample exact, at the cost of returning bounds rather than point estimates.
+
+Answers: *what fraction of patients actually benefit?*
+:::
+
+:::
+
+The distinction matters. A flat CATE surface in Parts I–III is **not** evidence
+that individual effects are constant — those methods are conditional-mean
+analyses and are structurally incapable of detecting heterogeneity driven by
+unmeasured factors. Part IV is the analysis that speaks to it.
+
+## Start here
+
+- **[Tutorial](tutorial.qmd)** — how to run the pipeline on your own trial, step
+  by step, with the code.
+- **[Full analysis](analysis.qmd)** — the complete rendered document: every
+  model, figure, diagnostic, and table.
+- **[People](people.qmd)** — who built it, and how to reach us.
+
+## Citation
+
+The randomization-based methods in Part IV are developed in:
+
+> Chen, Z. and Li, X. *Enhanced inference for distributions and quantiles of
+> individual treatment effects in various experiments.* JASA.
+
+This work is supported by **NHLBI R01HL168202**.

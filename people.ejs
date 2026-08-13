@@ -1,0 +1,18 @@
+<!-- Card template for people.qmd. Lines must start at column 0: four leading
+     spaces would be parsed as a markdown indented code block and the HTML
+     would render escaped rather than as cards. -->
+<div class="card-grid">
+<% for (const item of items) { %>
+<div class="person-card">
+<% if (item.photo) { %><img class="person-photo" src="<%- item.photo %>" alt=""><% } %>
+<div class="person-name"><%= item.name %></div>
+<div class="person-role"><%= item.role %></div>
+<% if (item.affiliation) { %><div class="person-affil"><%= item.affiliation %></div><% } %>
+<div class="card-links">
+<% if (item.url) { %><a href="<%- item.url %>" target="_blank">Website</a><% } %>
+<% if (item.email) { %><a href="mailto:<%- item.email %>">Email</a><% } %>
+<% if (item.github) { %><a href="<%- item.github %>">GitHub</a><% } %>
+</div>
+</div>
+<% } %>
+</div>

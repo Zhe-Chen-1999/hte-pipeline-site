@@ -1,0 +1,36 @@
+---
+title: "Full analysis"
+subtitle: "The complete rendered pipeline — every model, figure, diagnostic and table"
+toc: false
+---
+
+The document below is the pipeline run end to end. It is a single reproducible
+R Markdown file: one configuration block at the top switches it between a binary
+and a continuous outcome, and expensive steps are cached so that re-running after
+an edit takes seconds rather than hours.
+
+::: {.callout-important appearance="simple"}
+### Availability
+
+The rendered analysis is not published here yet. It reports results on individual
+patient data, and is being released subject to each trial's data use agreement.
+
+It is available on request in the meantime — please
+[get in touch](people.qmd).
+:::
+
+## What is in it
+
+| Part | Contents |
+|---|---|
+| **Setup** | Package installation, source files, caching, and the single configuration block that drives everything else |
+| **I. Fit-the-fit** | BART estimation of per-patient CATEs; CART for subgroup discovery; variable importance and interaction (VIVI) heatmaps |
+| **II. Sensitivity** | A grid over the BART prior specification, and cross-method comparison against Bayesian Causal Forest and gradient boosting |
+| **III. Prognostic score** | Treatment effect heterogeneity by baseline risk, with the prognostic score estimated three ways |
+| **IV. ITE quantiles** | Randomization-based one- and two-sided confidence limits, the benefiting-fraction bounds, and a second worked example on a continuous outcome |
+
+::: {.callout-important appearance="simple"}
+Results shown on individual patient data are subject to each trial's data use
+agreement. The source code is openly available so the method can be applied
+elsewhere.
+:::

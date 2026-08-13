@@ -1,0 +1,268 @@
+---
+title: "Tutorial"
+subtitle: "Running the HTE pipeline on your own trial"
+toc: true
+toc-depth: 2
+---
+
+This walks through the pipeline from a standing start: what to install, what your
+data has to look like, what to change, and how to read each part's output. Code
+here is for copying — none of it executes when the site builds.
+
+## 1. What you need
+
+::: {.callout-note appearance="simple"}
+### Prerequisites
+
+R 4.2 or later, and RStudio if you want the point-and-click render button. A full
+run takes a few hours the first time, mostly BART sampling; afterwards caching
+makes re-runs take seconds.
+:::
+
+```r
+## CRAN packages
+install.packages(c("BART", "dbarts", "bartMan", "caret", "rpart", "rpart.plot",
+                   "ggplot2", "dplyr", "tidyr", "purrr", "ggh4x", "gridExtra",
+                   "scales", "bcf", "xgboost", "grf", "extraDistr", "devtools"))
+
+## RIQITE is not on CRAN — it provides the randomization-inference engine
+devtools::install_github("li-xinran/RIQITE")
+```
+
+Two source files sit next to the `.Rmd` and are loaded by it:
+
+| File | What it provides |
+|---|---|
+| `clusterfunctions.R` | `lbart.cluster()` and `wbart.cluster()` — run several BART chains in parallel and collect them into one posterior |
+| `helper_functions.R` | `method_combine()` and the rest of the ITE-quantile machinery, from the [paper's repository](https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles) |
+
+## 2. What your data has to look like
+
+One row per randomized patient, no missing values in the analysis variables:
+
+| Object | Type | Meaning |
+|---|---|---|
+| `y` | numeric | the outcome — `0/1` for binary, any numeric for continuous |
+| `z` | **logical** | treatment assignment, `TRUE` = treated |
+| `X` | data.frame | baseline covariates; factors stay factors |
+
+::: {.callout-warning appearance="simple"}
+`z` must be **logical**, not numeric `0/1`. Several helpers use it as a mask —
+`mean(y[z])` — and a numeric `z` would index *positionally* instead, silently
+computing the wrong thing rather than erroring.
+:::
+
+```r
+X <- dat[, c("age", "sofa_score", "comorbidity", "lives_at_home")]
+y <- dat$death_28d          # 0/1
+z <- dat$arm == "treatment"  # logical
+```
+
+## 3. The one block you edit
+
+Everything downstream is driven by a single configuration chunk:
+
+```r
+OUTCOME_TYPE <- "binary"    # "binary" or "continuous"
+GLOBAL_SEED  <- 123
+CACHE_DIR    <- "cache"
+REFRESH_ALL  <- FALSE       # TRUE forces every cached result to recompute
+
+## Part IV: randomization-based inference
+ALPHA <- 0.1                # 1 - ALPHA confidence
+NPERM <- 1e4                # permutation draws
+
+## Which parts to run
+RUN_PRIOR_GRID    <- TRUE
+RUN_CROSS_METHOD  <- TRUE
+RUN_BASELINE_RISK <- TRUE
+```
+
+`OUTCOME_TYPE` switches the whole document: logistic vs. standard BART, the
+XGBoost objective, the prognostic-model family, and every axis label. Set the
+three `RUN_*` flags to `FALSE` while drafting to keep re-renders quick.
+
+### How the cache works
+
+A full run takes hours, almost all of it BART sampling. Nobody will iterate on
+prose if every re-knit costs an afternoon, so each expensive result is wrapped in
+a small helper:
+
+```r
+step1.res <- cached("step1_bart_binary", {
+  bart_fit_binary_outcome(X, y, z, ...)     # only runs if the file is absent
+})
+```
+
+The first time through, the block runs and the result is written to
+`cache/step1_bart_binary.rds`. Every later knit finds that file and reloads it in
+milliseconds. A second knit of the whole document takes seconds rather than
+hours, so you can edit text freely.
+
+The appendix prints a table of what was computed and what was reloaded on that
+run, so you can always tell which is which.
+
+::: {.callout-warning appearance="simple"}
+### The one thing to watch
+
+**The cache is keyed on the name, not on the inputs.** It has no idea what went
+into producing the result. Change your data, a seed, or a hyperparameter and the
+*old* result is silently reloaded — no error, no warning, just stale numbers
+under a new label.
+
+So after any such change, set `REFRESH_ALL <- TRUE`, knit once, then set it back
+to `FALSE`.
+:::
+
+To recompute just one thing rather than everything, delete that single file:
+
+```bash
+rm cache/step1_bart_binary.rds     # this one recomputes; everything else reloads
+```
+
+And if you change an analysis in a way that makes the old result meaningless —
+a different estimator, a different analysis set — give it a **new name** rather
+than reusing the old one. That makes the stale file impossible to load by
+accident:
+
+```r
+ci_two <- cached("ite_twosided_m2", { ... })   # renamed from ite_twosided
+```
+
+## 4. Part I — who benefits, and which covariates say so
+
+**Stage 1** fits BART to the outcome and returns a posterior CATE for every
+patient:
+
+```r
+step1.res <- bart_fit_binary_outcome(
+  X, y, z,
+  Power  = 3, Base = 0.25, Ntrees = 50,   # selected by 10-fold CV
+  seed = GLOBAL_SEED, nchains = 4,
+  ndpost = 1000, nskip = 500
+)
+cate.res <- step1.res$cate_results
+```
+
+Passing vectors instead of scalars for `Power`/`Base`/`Ntrees` triggers the
+cross-validation search — budget over two hours for that.
+
+**Stage 2** fits a regression tree *to* those estimates, which is where the
+interpretable subgroups come from:
+
+```r
+cart_fit(point_est = cate.res$cate,
+         posterior = step1.res$cate_posterior,
+         X = X_unscaled, metric = EFFECT_LABEL,
+         maxdepth = 3, cp = 0.01)
+```
+
+::: {.callout-important appearance="simple"}
+The tree's splits are **hypotheses about effect modification**, not tested
+subgroup effects. There is no multiplicity control here, and a single CART is
+unstable — perturb the data slightly and a split can flip.
+:::
+
+## 5. Part II — is the picture real?
+
+Four independent checks on Part I, each trying to break it:
+
+- **MCMC diagnostics** — autocorrelation and Geweke statistics. Slow decay means
+  raise `BART_KEEPEVERY`.
+- **VIVI heatmaps** — which covariates and *interactions* the ensemble actually
+  used. The diagonal is a posterior split-inclusion proportion; the off-diagonal
+  is interaction strength, which a CART barplot structurally cannot show.
+- **Prior grid** — eight BART prior configurations. If the shrinkage ratio stays
+  near zero across all of them, the posterior cannot separate patients and any
+  apparent subgroup structure is fragile.
+- **Cross-method comparison** — Bayesian Causal Forest and XGBoost T-/S-learners
+  on the same data.
+
+## 6. Part III — is it just baseline risk?
+
+Effect heterogeneity often tracks a patient's overall prognosis rather than any
+specific covariate. A prognostic score is estimated three ways — control-arm
+only, full-sample without the treatment indicator, and sample-split — patients
+are grouped into quartiles, and the treatment effect is reported within each.
+
+Comparing the three guards against the score itself being an artifact of how it
+was fitted.
+
+## 7. Part IV — what fraction actually benefit?
+
+This is the part with no outcome model. It asks a question Parts I–III cannot
+answer, using only the randomization.
+
+```r
+## Shuffle first: the rank statistic breaks ties by index order
+set.seed(GLOBAL_SEED)
+ord <- sample(length(z))
+Z <- as.numeric(z)[ord]; Y <- as.numeric(y_cont)[ord]; n <- length(Z)
+
+## One-sided lower confidence limits for every effect quantile
+ci_lower <- method_combine(
+  Z = Z, Y = Y, N = n, k_vec = 1:n,
+  alpha = ALPHA, simul = TRUE, nperm = NPERM,
+  treat.method.list   = list(name = "Stephenson", s = 6),
+  control.method.list = list(name = "Stephenson", s = 6)
+)
+
+plot_quantile_lower(ci_lower$lower)
+```
+
+Upper limits come from re-running with the treatment labels switched, then
+negating and reversing:
+
+```r
+ub <- method_combine(Z = 1 - Z, Y = Y, N = n, k_vec = 1:n,
+                     alpha = ALPHA, simul = TRUE, nperm = NPERM,
+                     treat.method.list   = list(name = "Stephenson", s = 6),
+                     control.method.list = list(name = "Stephenson", s = 6))
+upper <- -ub$lower[n:1]
+```
+
+### Turning limits into a count
+
+If the lower limit satisfies $L_k > c$ then $\tau_{(k)} > c$, and because the
+effects are sorted, so does every larger one — hence *at least* $n - k + 1$
+patients have an effect above $c$:
+
+```r
+n_benefit <- sapply(thresholds, function(cc) {
+  kk <- which(ci_lower$lower > cc)
+  if (length(kk)) n - min(kk) + 1L else 0L
+})
+```
+
+::: {.callout-warning appearance="simple"}
+### Read the direction from the right limit
+
+If a **larger outcome is good**, benefit is $\tau_i > c$ — read it from the
+**lower** limits. If a **larger outcome is bad** (mortality, more disability),
+benefit is $\tau_i < c$ — read it from the **upper** limits.
+
+Spend the whole of $\alpha$ on the direction you care about. Reading one side off
+a two-sided interval uses $\alpha/2$ and is needlessly conservative.
+:::
+
+## 8. Interpreting the whole thing
+
+| Parts I–III say | Part IV says | Conclusion |
+|---|---|---|
+| covariate-driven HTE | benefiting fraction certified | Strongest case — report the subgroup tree and the bounds together |
+| covariate-driven HTE | bounds uninformative | Common in small trials. Lead with the subgroup finding; note the model-free bound neither confirms nor contradicts it |
+| flat CATE surface | benefiting fraction certified | Real heterogeneity, **not** explained by measured covariates. Do not report "no HTE" |
+| flat CATE surface | bounds uninformative | The honest null. **Not** evidence of a constant treatment effect |
+
+Three things to carry into any write-up:
+
+1. **State the estimand as bounds, never as a point.** "With 90% confidence, at
+   least X% of patients benefited" — not "X% benefited".
+2. **Never report a flat CATE surface as homogeneity.**
+3. **Report the shuffle seed and the rank score.** Ties are broken by index
+   order, so discrete-outcome results depend on both.
+
+## Next steps
+
+- [See it run end to end](analysis.qmd) on real trial data.
+- [Get in touch](people.qmd) if you would like help applying it to your trial.

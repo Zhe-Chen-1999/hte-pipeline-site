@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "!HOW-TO-UPDATE.md"   # maintainer instructions: repo only, not a public page
+
+# Rendered output from any R code is cached under _freeze/ and committed, so the
+# GitHub Action republishes WITHOUT running R. The analyses take hours and need
+# patient-level data; neither belongs on a public runner. Re-render locally
+# (quarto render) only when a page containing code actually changes.
+execute:
+  freeze: auto
+
+website:
+  title: "HTE Analysis Pipeline"
+  description: "Heterogeneity of treatment effect analysis for randomized trials: BART, CART, and randomization-based inference for individual effects"
+  site-url: https://zhe-chen-1999.github.io/hte-pipeline-site   # preview; change when it moves to the lab org
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: tutorial.qmd
+        text: Tutorial
+      - href: analysis.qmd
+        text: Full analysis
+      - href: people.qmd
+        text: People
+    right:
+      - icon: github
+        href: https://github.com/harhay-lab
+        aria-label: GitHub
+  page-footer:
+    left: "NHLBI R01HL168202 &nbsp;·&nbsp; University of Pennsylvania &nbsp;·&nbsp; Yale University"
+    right: "Built with [Quarto](https://quarto.org)."
+
+format:
+  html:
+    theme: [cosmo, styles.scss]
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    anchor-sections: true
+    smooth-scroll: true
