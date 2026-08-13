@@ -17,6 +17,7 @@ icon (top right) → change the text → click **Commit changes** at the bottom.
 | "Full analysis" page — the text around the link | `analysis.qmd` |
 | People — names, roles, links | `people.yml` |
 | The menu bar at the top | `_quarto.yml` |
+| The big rendered analysis itself | `output/full-analysis.html` |
 | Colours, fonts, spacing | `styles.scss` |
 
 ---
@@ -144,8 +145,16 @@ is the usual cause of a failed build.
 
 ## Recipe 5 — Update the rendered analysis
 
-The full analysis is not in this repository yet — see the last section of this
-guide for how to publish it once the data agreements allow.
+When you re-knit the pipeline, replace the file on the site:
+
+1. Open the `output` folder on GitHub.
+2. **Add file → Upload files**, drag in the new HTML.
+3. Rename it to `full-analysis.html` so it replaces the old one, then commit.
+
+Nothing else changes — `analysis.qmd` already points at that filename.
+
+Note that the underlying trial data (`shamroc_cart.csv`) is **not** in this
+repository and never should be. Only the rendered output is published.
 
 ---
 
@@ -190,27 +199,3 @@ git add _freeze && git commit -m "update" && git push
 This is deliberate: the analyses take hours, need patient-level data, and must
 never execute on a public runner.
 
----
-
-## Publishing the rendered analysis (once data agreements allow)
-
-The full analysis is deliberately **not** in this repository — `output/` is in
-`.gitignore`, so the patient-data render cannot reach a public site or its git
-history by accident.
-
-To publish it:
-
-1. Put the knitted HTML at `output/full-analysis.html`.
-2. Remove `/output/` from `.gitignore`.
-3. Add this back to `_quarto.yml` under `project:`:
-
-   ```yaml
-     resources:
-       - "output/*.html"
-   ```
-
-4. In `analysis.qmd`, delete the "Availability" callout and add the button:
-
-   ```markdown
-   [Open the full analysis →](output/full-analysis.html){.btn .btn-primary target="_blank"}
-   ```

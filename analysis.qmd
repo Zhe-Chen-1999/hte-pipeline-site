@@ -9,15 +9,12 @@ R Markdown file: one configuration block at the top switches it between a binary
 and a continuous outcome, and expensive steps are cached so that re-running after
 an edit takes seconds rather than hours.
 
-::: {.callout-important appearance="simple"}
-### Availability
+:::: {.callout-tip appearance="simple"}
+It is a large document with its own table of contents. Open it in a new tab and
+use the sidebar to move between parts.
+::::
 
-The rendered analysis is not published here yet. It reports results on individual
-patient data, and is being released subject to each trial's data use agreement.
-
-It is available on request in the meantime — please
-[get in touch](people.qmd).
-:::
+[Open the full analysis →](output/full-analysis.html){.btn .btn-primary target="_blank"}
 
 ## What is in it
 

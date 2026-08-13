@@ -2,8 +2,3 @@
 /_site/
 .DS_Store
 *.Rproj.user
-
-# The rendered analysis runs on individual patient data. It is kept out of git
-# entirely — not just untracked — so it cannot reach a public repo or its
-# history by accident. Restore it locally to preview the full site.
-/output/
