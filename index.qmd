@@ -6,69 +6,68 @@ toc: false
 ::: {.hero}
 ## Heterogeneity of treatment effect analysis for randomized trials
 
-Which patients benefit, by how much, and how confident can we be? An end-to-end
-pipeline combining Bayesian machine learning with randomization-based inference —
-published with its code, so it can be applied to your own trial.
+Two approaches to treatment effect heterogeneity — model-based estimation of
+conditional average effects, and randomization-based inference for the
+distribution of individual effects — in one reproducible pipeline, published with
+its code.
 :::
 
 ## The problem
 
-A trial reports one average treatment effect. Clinicians want to know something
-different: *does this therapy work for the patient in front of me?*
+A randomized trial reports an average treatment effect over everyone enrolled.
+That average can conceal variation: the effect may differ from one patient to the
+next.
 
-Standard subgroup analysis answers a related but weaker question — which
-covariate-defined groups have different **average** effects — and does so one
-binary split at a time, with limited power and a multiplicity problem.
+"Heterogeneity of treatment effect" covers a family of questions about that
+variation, and they are not the same question. How the average effect varies with
+measured baseline characteristics is one. How the individual effects are
+distributed across patients is another. They involve different estimands, admit
+different assumptions, and need different methods.
 
-This pipeline attacks the question from two directions at once, and keeps them
-clearly separated.
+This pipeline implements both, and keeps them separate.
 
-## Two complementary approaches
+## Two approaches
 
 ::: {.card-grid}
 
 ::: {.analysis-card}
 ### Model-based
 
-**Parts I–III.** Bayesian Additive Regression Trees estimate a conditional
-average treatment effect for every patient. A regression tree is then fitted *to*
-those estimates, turning a per-patient vector into interpretable, covariate-defined
-subgroups. Sensitivity analyses check the result against the BART priors and
-against other estimators.
+**Parts I–III.** Bayesian Additive Regression Trees estimate the conditional
+average treatment effect for each patient from their baseline covariates. A
+regression tree is then fitted to those estimates, summarising the fitted surface
+as a small set of covariate-defined subgroups.
 
-Answers: *which measured covariates drive the effect?*
+Part II examines whether the result is sensitive to the BART prior and whether
+other estimators — Bayesian Causal Forest, causal forest, and gradient-boosted
+learners — agree with it. Part III asks whether the effect varies with a
+prognostic score summarising baseline risk.
+
+**Estimand:** $E[Y(1) - Y(0) \mid X]$, the conditional average treatment effect
+given measured covariates.
 :::
 
 ::: {.analysis-card}
 ### Randomization-based
 
 **Part IV.** Confidence bounds on the quantiles of the individual treatment
-effects, using no outcome model at all — only the trial's own randomization.
-Finite-sample exact, at the cost of returning bounds rather than point estimates.
+effects, derived from the trial's randomization alone, with no outcome model.
 
-Answers: *what fraction of patients actually benefit?*
+Because each patient is observed under one arm only, the distribution of
+individual effects is partially identified: the method returns confidence bounds
+rather than point estimates, and those bounds are valid in finite samples under
+the assignment mechanism.
+
+**Estimand:** quantiles of $\tau_i = Y_i(1) - Y_i(0)$ across the randomized
+sample.
 :::
 
 :::
-
-The distinction matters. A flat CATE surface in Parts I–III is **not** evidence
-that individual effects are constant — those methods are conditional-mean
-analyses and are structurally incapable of detecting heterogeneity driven by
-unmeasured factors. Part IV is the analysis that speaks to it.
 
 ## Start here
 
 - **[Tutorial](tutorial.qmd)** — how to run the pipeline on your own trial, step
   by step, with the code.
-- **[Full analysis](analysis.qmd)** — the complete rendered document: every
-  model, figure, diagnostic, and table.
+- **[Full analysis](analysis.qmd)** — the complete rendered document, including
+  the full reference list for the methods used.
 - **[People](people.qmd)** — who built it, and how to reach us.
-
-## Citation
-
-The randomization-based methods in Part IV are developed in:
-
-> Chen, Z. and Li, X. *Enhanced inference for distributions and quantiles of
-> individual treatment effects in various experiments.* JASA.
-
-This work is supported by **NHLBI R01HL168202**.

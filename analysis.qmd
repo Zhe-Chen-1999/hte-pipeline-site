@@ -1,6 +1,5 @@
 ---
 title: "Full analysis"
-subtitle: "The complete rendered pipeline — every model, figure, diagnostic and table"
 toc: false
 ---
 
@@ -20,11 +19,12 @@ use the sidebar to move between parts.
 
 | Part | Contents |
 |---|---|
-| **Setup** | Package installation, source files, caching, and the single configuration block that drives everything else |
-| **I. Fit-the-fit** | BART estimation of per-patient CATEs; CART for subgroup discovery; variable importance and interaction (VIVI) heatmaps |
-| **II. Sensitivity** | A grid over the BART prior specification, and cross-method comparison against Bayesian Causal Forest and gradient boosting |
-| **III. Prognostic score** | Treatment effect heterogeneity by baseline risk, with the prognostic score estimated three ways |
-| **IV. ITE quantiles** | Randomization-based one- and two-sided confidence limits, the benefiting-fraction bounds, and a second worked example on a continuous outcome |
+| **Setup and Configuration** | Package installation, source files, the caching helper, and the single global configuration block |
+| **Part I. A "fit-the-fit" approach** | **1.1** BART estimation of conditional average treatment effects, with the per-patient CATE plot and MCMC diagnostics · **1.2** Subgroup discovery via classification and regression trees (CART) · **1.3** Variable importance and interaction (VIVI) heatmaps |
+| **Part II. Sensitivity analyses and cross-method comparison** | **2.1** Sensitivity of the CATE estimates to the BART prior specification · **2.2** Cross-method comparison against Bayesian Causal Forest, XGBoost T- and S-learners, and causal forest |
+| **Part III. Treatment effect heterogeneity by prognostic score** | **3.1** Prognostic score estimation, three ways · **3.2** Observed treatment effects across prognostic-score strata · **3.3** CATE as a function of the prognostic score, plus CART subgroup discovery by baseline prognosis |
+| **Part IV. Randomization-based inference for ITE quantiles** | Unit shuffle and sign convention · one-sided confidence intervals for the effect quantiles · two-sided intervals via Bonferroni · bounds on the fraction of patients who benefit · a second worked example on the distracted-driving trial |
+| **Appendix** | References, and the cache status for that knit |
 
 ::: {.callout-important appearance="simple"}
 Results shown on individual patient data are subject to each trial's data use

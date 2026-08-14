@@ -33,7 +33,7 @@ website:
         href: https://github.com/harhay-lab
         aria-label: GitHub
   page-footer:
-    left: "NHLBI R01HL168202 &nbsp;·&nbsp; University of Pennsylvania &nbsp;·&nbsp; Yale University"
+    left: "University of Pennsylvania &nbsp;·&nbsp; Yale University"
     right: "Built with [Quarto](https://quarto.org)."
 
 format:

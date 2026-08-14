@@ -1,6 +1,6 @@
 ---
 title: "People"
-subtitle: "Investigators and collaborators on NHLBI R01HL168202"
+subtitle: "The team behind this work"
 toc: false
 listing:
   id: people-listing
@@ -15,7 +15,5 @@ listing:
 ## Join us
 
 We are always interested in collaborating with trialists, methodologists, and
-clinicians working on critical care. If our methods are relevant to a trial you
-are running or re-analysing, please get in touch with
-[Michael Harhay](mailto:mharhay@pennmedicine.upenn.edu) or
-[Fan Li](mailto:fan.f.li@yale.edu).
+clinicians. If these methods are relevant to a trial you are running or
+re-analysing, please get in touch.
