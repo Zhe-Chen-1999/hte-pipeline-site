@@ -6,6 +6,7 @@ project:
     - "!HOW-TO-UPDATE.md"   # maintainer instructions: repo only, not a public page
   resources:
     - "output/*.html"       # the knitted analysis, copied through as-is
+    - "code/*.R"            # source files offered for download
 
 # Rendered output from any R code is cached under _freeze/ and committed, so the
 # GitHub Action republishes WITHOUT running R. The analyses take hours and need

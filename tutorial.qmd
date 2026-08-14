@@ -29,23 +29,32 @@ devtools::install_github("li-xinran/RIQITE")
 
 ### The two source files
 
-Both sit next to the `.Rmd` and are loaded by it. Download them directly:
+Both sit next to the `.Rmd` and are loaded by it.
+
+| File | What it provides |
+|---|---|
+| [`clusterfunctions.R`](code/clusterfunctions.R) | `lbart.cluster()` and `wbart.cluster()` — run several BART chains in parallel and collect the posterior draws across chains into one array |
+| [`helper_functions.R`](https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles/blob/main/helper_functions.R) | `method_combine()` and the rest of the ITE-quantile machinery |
+
+Download both into your working directory:
 
 ```r
-download.file(
-  "https://raw.githubusercontent.com/harhay-lab/Covid-Steroid-HTE/main/clusterfunctions.R",
-  destfile = "clusterfunctions.R")
+## clusterfunctions.R — the current version, from this site
+download.file("https://zhe-chen-1999.github.io/hte-pipeline-site/code/clusterfunctions.R",
+              destfile = "clusterfunctions.R")
 
+## helper_functions.R — from the ITE-quantile paper's repository
 download.file(
   paste0("https://raw.githubusercontent.com/Zhe-Chen-1999/",
          "Enhanced_inference_for_ITE_quantiles/main/helper_functions.R"),
   destfile = "helper_functions.R")
 ```
 
-| File | What it provides |
-|---|---|
-| [`clusterfunctions.R`](https://github.com/harhay-lab/Covid-Steroid-HTE/blob/main/clusterfunctions.R) | `lbart.cluster()` and `wbart.cluster()` — run several BART chains in parallel and collect them into one posterior |
-| [`helper_functions.R`](https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles/blob/main/helper_functions.R) | `method_combine()` and the rest of the ITE-quantile machinery |
+::: {.callout-note appearance="simple"}
+Take `clusterfunctions.R` from the link above rather than from older copies
+circulating in other repositories — earlier versions size the posterior arrays
+incorrectly when thinning is used, and do not accept a `seed` argument.
+:::
 
 ## 2. What your data has to look like
 
@@ -214,18 +223,58 @@ is driving the result.
 ## 6. Part III — treatment effect heterogeneity by prognostic score
 
 Effect heterogeneity often tracks a patient's overall prognosis rather than any
-individual covariate.
+individual covariate. The prognostic score is the expected untreated outcome
+given baseline covariates,
+$$S_0(X) = E[Y(0) \mid X],$$
+which for a binary outcome is the baseline predicted risk $P(Y(0)=1 \mid X)$.
 
-**§3.1** estimates a prognostic score three ways — from the control arm only,
-from the full sample without a treatment indicator, and from a sample split that
-reserves part of the control arm for fitting. Comparing the three guards against
-the score being an artifact of how it was estimated.
+### 6.1 Estimating the score — and why the choice matters
 
-**§3.2** groups patients into quartiles of that score and reports the observed
-treatment effect within each, with bootstrap confidence intervals.
+If a high-quality, externally developed prognostic model exists for your
+population, use it: it is estimated independently of your trial and sidesteps
+everything below. When none is available, the pipeline offers three internal
+approaches and reports all three side by side, because they trade off differently
+and none dominates.
 
-**§3.3** estimates the CATE as a smooth function of the score, and fits a CART to
-discover subgroups defined by baseline prognosis.
+| Approach | Estimates | The catch |
+|---|---|---|
+| **1. Control arm only** | $E[Y(0)\mid X]$ — the natural prognostic quantity | Control outcomes are used both to fit the score and in the downstream HTE analysis, so the score is in-sample for controls but out-of-sample for treated patients. That asymmetry can manufacture a CATE-by-risk gradient where none exists, especially with many covariates relative to the control-arm size |
+| **2. Full sample, no treatment indicator** | $E[Y \mid X]$ | May keep type I error under control, though with no guarantee, and tends to have lower power. The score has no clean interpretation: it is risk averaged over treated and control conditions in a proportion that depends on the trial's allocation ratio, not baseline risk under no treatment |
+| **3. Sample splitting** | $E[Y(0)\mid X]$, honestly | Reserves part of the control arm to fit the score and excludes those patients from the HTE analysis. Prevents outcome reuse and makes estimation and analysis independent, at the cost of a smaller sample for both stages — less stable score estimation and lower power. Best suited to larger trials |
+
+```r
+## Approach 1 — control arm only
+prog_fit_ctrl <- glm(y ~ ., data = data.frame(y = y[!z], X[!z, ]),
+                     family = PROG_FAMILY)
+risk_ctrl <- predict(prog_fit_ctrl, newdata = X, type = "response")
+```
+
+`PROG_FAMILY` follows `OUTCOME_TYPE` — logistic for a binary outcome, Gaussian
+for a continuous one. The predicted value is a baseline risk in the first case
+and a baseline expected outcome in the second; the quartile stratification below
+is identical either way.
+
+::: {.callout-tip appearance="simple"}
+Read the three columns of output together rather than picking one. If the
+CATE-by-risk relationship appears under the control-arm score but vanishes under
+the sample split, that is a sign it was an artifact of reusing control outcomes —
+which is exactly what the comparison is there to reveal.
+:::
+
+### 6.2 Effects within prognostic strata
+
+Patients are grouped into quartiles of the score and the observed treatment
+effect is reported within each, with bootstrap confidence intervals. This is
+model-free given the score: within a stratum it is just a difference in means
+between arms.
+
+### 6.3 CATE as a function of the score
+
+BART and BCF are refit with the prognostic score as the **sole covariate**. This
+asks whether the treatment effect varies continuously with baseline prognosis,
+rather than only across four bins, and it is repeated for all three scores so the
+sensitivity is visible. A CART is also fitted to discover subgroups defined by
+baseline prognosis alone.
 
 ## 7. Part IV — randomization-based inference for ITE quantiles
 

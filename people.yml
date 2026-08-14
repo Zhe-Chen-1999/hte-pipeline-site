@@ -10,22 +10,22 @@
 # ---------------------------------------------------------------------------
 
 - name: Michael O. Harhay, PhD, MPH
-  role: Investigator
-  affiliation: Associate Professor of Epidemiology, Medicine (Pulmonary and Critical Care), and Statistics and Data Science, University of Pennsylvania
+  role: Associate Professor of Epidemiology, Medicine, and Statistics and Data Science
+  affiliation: University of Pennsylvania
   email: mharhay@pennmedicine.upenn.edu
   url: https://dbei.med.upenn.edu/staff/michael-harhay-phd-mph/
   photo: assets/michael-harhay.jpg
 
 - name: Fan Li, PhD
-  role: Investigator
-  affiliation: Associate Professor of Biostatistics and Cardiovascular Medicine, Yale University
+  role: Associate Professor of Biostatistics and Cardiovascular Medicine
+  affiliation: Yale University
   email: fan.f.li@yale.edu
   url: https://ysph.yale.edu/profile/fan-f-li/
   photo: assets/fan-li.jpg
 
 - name: Zhe Chen, PhD
   role: Research Assistant Professor of Epidemiology
-  affiliation: Department of Biostatistics, Epidemiology and Informatics, University of Pennsylvania
+  affiliation: University of Pennsylvania
   email: zhe.chen@pennmedicine.upenn.edu
   url: https://zhe-chen-1999.github.io
   github: https://github.com/Zhe-Chen-1999
