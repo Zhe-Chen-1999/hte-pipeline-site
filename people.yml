@@ -10,14 +10,15 @@
 # ---------------------------------------------------------------------------
 
 - name: Michael O. Harhay, PhD, MPH
-  role: Associate Professor of Epidemiology, Medicine, and Statistics and Data Science
+  role: Deputy Director, Division of Epidemiology
+        Associate Professor of Epidemiology, Medicine (Pulmonary and Critical Care), and Statistics & Data Science
   affiliation: University of Pennsylvania
   email: mharhay@pennmedicine.upenn.edu
   url: https://dbei.med.upenn.edu/staff/michael-harhay-phd-mph/
   photo: assets/michael-harhay.jpg
 
 - name: Fan Li, PhD
-  role: Associate Professor of Biostatistics and Cardiovascular Medicine
+  role: Associate Professor of Biostatistics 
   affiliation: Yale University
   email: fan.f.li@yale.edu
   url: https://ysph.yale.edu/profile/fan-f-li/
