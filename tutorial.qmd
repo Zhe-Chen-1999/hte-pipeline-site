@@ -6,16 +6,11 @@ toc-depth: 2
 ---
 
 This walks through the pipeline from a standing start: what to install, what your
-data has to look like, what to change, and what each part produces. Code here is
-for copying — none of it executes when the site builds.
+data has to look like, what to change, and what each part produces. 
 
 ## 1. What you need
 
-::: {.callout-note appearance="simple"}
-R 4.2 or later, and RStudio if you want the point-and-click render button. A full
-run takes a few hours the first time, mostly BART sampling; afterwards caching
-makes re-runs take seconds.
-:::
+### Package installation
 
 ```r
 ## CRAN packages
@@ -23,11 +18,11 @@ install.packages(c("BART", "dbarts", "bartMan", "caret", "rpart", "rpart.plot",
                    "ggplot2", "dplyr", "tidyr", "purrr", "ggh4x", "gridExtra",
                    "scales", "bcf", "xgboost", "grf", "extraDistr", "devtools"))
 
-## RIQITE is not on CRAN — it is the randomization-inference engine used in Part IV
+## RIQITE: Randomization-inference engine used in Part IV 
 devtools::install_github("li-xinran/RIQITE")
 ```
 
-### The two source files
+### Source files
 
 Both sit next to the `.Rmd` and are loaded by it.
 
@@ -39,7 +34,7 @@ Both sit next to the `.Rmd` and are loaded by it.
 Download both into your working directory:
 
 ```r
-## clusterfunctions.R — the current version, from this site
+## clusterfunctions.R — from this site
 download.file("https://zhe-chen-1999.github.io/hte-pipeline-site/code/clusterfunctions.R",
               destfile = "clusterfunctions.R")
 
@@ -49,12 +44,6 @@ download.file(
          "Enhanced_inference_for_ITE_quantiles/main/helper_functions.R"),
   destfile = "helper_functions.R")
 ```
-
-::: {.callout-note appearance="simple"}
-Take `clusterfunctions.R` from the link above rather than from older copies
-circulating in other repositories — earlier versions size the posterior arrays
-incorrectly when thinning is used, and do not accept a `seed` argument.
-:::
 
 ## 2. What your data has to look like
 
@@ -69,8 +58,7 @@ One row per randomized patient, with no missing values in the analysis variables
 Parts of the pipeline convert these internally: `z_num <- as.numeric(z)` is
 created for Bayesian Causal Forest, causal forest, and the propensity models,
 which require a numeric `0/1` indicator, and `model.matrix()` expands `X` into a
-numeric design matrix for XGBoost and BCF. You supply the logical `z` and the
-data-frame `X`; the conversions happen where they are needed.
+numeric design matrix for XGBoost and BCF. 
 
 ## 3. The one block you edit
 
@@ -89,7 +77,7 @@ REFRESH_ALL <- FALSE     # TRUE recomputes every cached result on this knit
 ## ---- Which Parts to run ----
 RUN_PRIOR_GRID    <- TRUE   # Part II: BART prior-sensitivity grid
 RUN_CROSS_METHOD  <- TRUE   # Part II: Cross-method comparison (BCF, Causal Forest, XGBoost)
-RUN_BASELINE_RISK <- TRUE   # Part III: Baseline-risk heterogeneity analysis
+RUN_BASELINE_RISK <- TRUE   # Part III: Heterogeneity analysis by prognosis score
 ## =========================================================================
 ```
 
@@ -97,27 +85,17 @@ What each one does:
 
 | Setting | Effect |
 |---|---|
-| `OUTCOME_TYPE` | Governs Parts I–III: the BART likelihood (logit vs. Gaussian), the XGBoost objective, the prognostic-score family, and the summary tables. Risk-ratio output appears only for a binary outcome |
-| `GLOBAL_SEED` | Seeds the BART chains, the cross-validation folds, and the unit shuffle in Part IV. Report it with any result |
+| `OUTCOME_TYPE` | Governs Parts I–III: the BART likelihood (logit vs. Gaussian), the XGBoost objective, the prognostic-score family, and the summary tables. Risk ratio output appears only for a binary outcome |
+| `GLOBAL_SEED` | Seeds the BART chains, the cross-validation folds, and the unit shuffle in Part IV
 | `CACHE_DIR` | Where cached results are written |
 | `REFRESH_ALL` | `TRUE` recomputes everything on this knit, ignoring the cache |
-| `RUN_PRIOR_GRID` | `FALSE` skips §2.1, the eight-configuration BART prior grid — the single most expensive block |
+| `RUN_PRIOR_GRID` | `FALSE` skips §2.1, the eight-configuration BART prior grid |
 | `RUN_CROSS_METHOD` | `FALSE` skips §2.2, the BCF / causal forest / XGBoost comparison |
 | `RUN_BASELINE_RISK` | `FALSE` skips all of Part III |
 
-Setting the three `RUN_*` flags to `FALSE` reduces a knit to Parts I and IV,
-which is useful while drafting text.
-
-::: {.callout-note appearance="simple"}
-`ALPHA` (the confidence level) and `NPERM` (the number of permutation draws) are
-**not** in this block — they sit in Part IV's own setup chunk, since nothing
-before Part IV uses them.
-:::
-
 ### How the cache works
 
-A full run takes hours, almost all of it BART sampling. Nobody will iterate on
-prose if every re-knit costs an afternoon, so each expensive result is wrapped in
+A full run takes hours. To iterate on prose quickly, each expensive result is wrapped in
 a small helper:
 
 ```r
@@ -128,16 +106,15 @@ step1.res <- cached("step1_bart_binary", {
 
 The first time through, the block runs and the result is written to
 `cache/step1_bart_binary.rds`. Every later knit finds that file and reloads it in
-milliseconds. The appendix prints a table of what was computed and what was
+seconds. The appendix prints a table of what was computed and what was
 reloaded on that run.
 
 ::: {.callout-warning appearance="simple"}
 ### The one thing to watch
 
 **The cache is keyed on the name, not on the inputs.** It has no idea what went
-into producing the result. Change your data, a seed, or a hyperparameter and the
-*old* result is silently reloaded — no error, no warning, just stale numbers under
-a new label.
+into producing the result. Change your data or a seed and the
+*old* result is silently reloaded without warning.
 
 So after any such change, set `REFRESH_ALL <- TRUE`, knit once, then set it back.
 :::
@@ -155,9 +132,7 @@ or delete its file, which has the same effect:
 rm cache/step1_bart_binary.rds
 ```
 
-And if you change an analysis in a way that makes the old result meaningless — a
-different estimator, a different analysis set — give it a **new name** rather than
-reusing the old one, so the stale file cannot be loaded by accident.
+And if you change an analysis in a way that makes the old result meaningless, give it a **new name** so the stale file cannot be loaded by accident.
 
 ## 4. Part I — a "fit-the-fit" approach
 
@@ -175,15 +150,12 @@ cate.res <- step1.res$cate_results
 ```
 
 Passing vectors rather than scalars for `Power`/`Base`/`Ntrees` triggers the
-cross-validation search, which takes over two hours.
+cross-validation search.
 
-This section also carries the **MCMC diagnostics** — autocorrelation of the
-fitted response surface and Geweke statistics per chain. They belong here because
-they check the sampler behind the estimates in this same section, before anything
-is built on top of them. Slow autocorrelation decay means raising the thinning
-interval.
+This section also reports **MCMC diagnostics** for each chain, including autocorrelation of the fitted response surface to assess mixing and Geweke statistics to assess stationarity.
+Slow decay in the autocorrelation function (ACF) indicates strong serial dependence and potentially poor mixing, and may motivate increasing the thinning interval (`BART_KEEPEVERY`). Large absolute Geweke Z-statistics indicate potential non-stationarity or lack of convergence and may motivate increasing the burn-in period (`BART_NSKIP`).
 
-**§1.2** fits a regression tree to those estimates, which is where the
+**§1.2** fits a classification and regression tree to those estimates, which is where the
 interpretable subgroups come from:
 
 ```r
@@ -193,54 +165,39 @@ cart_fit(point_est = cate.res$cate,
          maxdepth = 3, cp = 0.01)
 ```
 
-::: {.callout-important appearance="simple"}
-The tree's splits are **hypotheses about effect modification**, not tested
-subgroup effects. There is no multiplicity control here, and a single CART is
-unstable — perturb the data slightly and a split can flip.
-:::
-
 **§1.3** produces VIVI–VSUP heatmaps: the diagonal is a posterior split-inclusion
 proportion for each covariate, and the off-diagonal is pairwise interaction
-strength — something a variable-importance barplot cannot show. Colour intensity
-encodes magnitude and desaturation encodes posterior uncertainty.
+strength. Colour intensity encodes magnitude and desaturation encodes posterior uncertainty.
 
 ## 5. Part II — sensitivity analyses and cross-method comparison
 
 Two checks on whether the Part I picture survives scrutiny.
 
-**§2.1 — the BART prior.** Eight prior configurations, varying tree depth
-(`power`, `base`), leaf shrinkage (`k`), and ensemble size (`ntree`). The
-shrinkage ratio — the spread of posterior-mean CATEs across patients divided by
-the average within-patient posterior SD — summarises each. If it stays near zero
-across the whole grid, the posterior cannot separate patients and any apparent
-subgroup structure is fragile.
+**§2.1 — BART Prior Sensitivity.** BART is refit across a panel of prior configurations spanning under-regularized, default, CV-selected, and over-regularized regimes, by varying tree depth (`power`, `base`), leaf shrinkage (`k`), and ensemble size (`ntree`). 
 
-**§2.2 — other estimators.** Bayesian Causal Forest, XGBoost T- and S-learners,
-and causal forest are fitted to the same data, and their CATE distributions are
-overlaid. Agreement is reassuring; disagreement localises which modelling choice
-is driving the result.
+**§2.2 — cross-Method Comparison.** Bayesian Causal Forest, XGBoost T- and S-learners,
+and causal forest are fitted to the same data for a direct side-by-side comparison of their CATE distributions.
 
 ## 6. Part III — treatment effect heterogeneity by prognostic score
 
-Effect heterogeneity often tracks a patient's overall prognosis rather than any
+Effect heterogeneity sometimes tracks a patient's overall prognosis rather than any
 individual covariate. The prognostic score is the expected untreated outcome
 given baseline covariates,
 $$S_0(X) = E[Y(0) \mid X],$$
 which for a binary outcome is the baseline predicted risk $P(Y(0)=1 \mid X)$.
 
-### 6.1 Estimating the score — and why the choice matters
+### 6.1 Estimating the score 
 
 If a high-quality, externally developed prognostic model exists for your
 population, use it: it is estimated independently of your trial and sidesteps
 everything below. When none is available, the pipeline offers three internal
-approaches and reports all three side by side, because they trade off differently
-and none dominates.
+approaches and reports all three side by side.
 
 | Approach | Estimates | The catch |
 |---|---|---|
-| **1. Control arm only** | $E[Y(0)\mid X]$ — the natural prognostic quantity | Control outcomes are used both to fit the score and in the downstream HTE analysis, so the score is in-sample for controls but out-of-sample for treated patients. That asymmetry can manufacture a CATE-by-risk gradient where none exists, especially with many covariates relative to the control-arm size |
-| **2. Full sample, no treatment indicator** | $E[Y \mid X]$ | May keep type I error under control, though with no guarantee, and tends to have lower power. The score has no clean interpretation: it is risk averaged over treated and control conditions in a proportion that depends on the trial's allocation ratio, not baseline risk under no treatment |
-| **3. Sample splitting** | $E[Y(0)\mid X]$, honestly | Reserves part of the control arm to fit the score and excludes those patients from the HTE analysis. Prevents outcome reuse and makes estimation and analysis independent, at the cost of a smaller sample for both stages — less stable score estimation and lower power. Best suited to larger trials |
+| **1. Control arm only** | $E[Y(0)\mid X]$ — the natural prognostic quantity | A prognostic model is fit using control-arm participants only and then applied to predict the untreated outcome for all participants. Control outcomes are used both to fit the score and in the downstream HTE analysis, so the score is in-sample for controls but out-of-sample for treated patients. That asymmetry can manufacture a CATE-by-risk gradient where none exists, especially with many covariates relative to the control-arm size |
+| **2. Full sample, no treatment indicator** | $E[Y \mid X]$ | Fits a regression of $Y$ on $X$ using all participants, excluding treatment assignment $Z$. This may maintain appropriate type I error control (though with no guarantee) but could have lower power for detecting HTE. The resulting score also lacks a natural interpretation: it estimates risk averaged over treated and control conditions in a proportion that depends on the trial's allocation ratio, not baseline prognosis under no treatment |
+| **3. Sample splitting** | $E[Y(0)\mid X]$, honestly | Reserves part of the control arm to fit the score and excludes those patients from the HTE analysis. Prevents outcome reuse and makes score estimation and HTE analysis independent, at the cost of a smaller sample for both stages. Best suited to larger trials |
 
 ```r
 ## Approach 1 — control arm only
@@ -250,35 +207,25 @@ risk_ctrl <- predict(prog_fit_ctrl, newdata = X, type = "response")
 ```
 
 `PROG_FAMILY` follows `OUTCOME_TYPE` — logistic for a binary outcome, Gaussian
-for a continuous one. The predicted value is a baseline risk in the first case
-and a baseline expected outcome in the second; the quartile stratification below
-is identical either way.
+for a continuous one. 
 
-::: {.callout-tip appearance="simple"}
-Read the three columns of output together rather than picking one. If the
-CATE-by-risk relationship appears under the control-arm score but vanishes under
-the sample split, that is a sign it was an artifact of reusing control outcomes —
-which is exactly what the comparison is there to reveal.
-:::
 
 ### 6.2 Effects within prognostic strata
 
 Patients are grouped into quartiles of the score and the observed treatment
-effect is reported within each, with bootstrap confidence intervals. This is
-model-free given the score: within a stratum it is just a difference in means
-between arms.
+effect is reported within each, with bootstrap confidence intervals. 
 
-### 6.3 CATE as a function of the score
+### 6.3 CATE as a function of the prognostic score
 
-BART and BCF are refit with the prognostic score as the **sole covariate**. This
-asks whether the treatment effect varies continuously with baseline prognosis,
-rather than only across four bins, and it is repeated for all three scores so the
-sensitivity is visible. A CART is also fitted to discover subgroups defined by
-baseline prognosis alone.
+BART and BCF are refit using the prognostic score as the **sole covariate**,
+assessing whether treatment effect heterogeneity is driven by baseline prognosis. 
+A CART model is also fitted to discover subgroups defined by baseline prognosis alone.
 
 ## 7. Part IV — randomization-based inference for ITE quantiles
 
-The part with no outcome model. It uses only the trial's randomization.
+The method assumes units have been randomly permuted before analysis.
+
+For each $k \in$ `k_vec`, `method_combine()` yields a one-sided lower confidence interval for $\tau_{(k)}$, the $k$-th smallest individual effect, and the inference is simultaneously valid across all $k$.
 
 ```r
 ## Shuffle first: the rank statistic breaks ties by index order
@@ -297,8 +244,7 @@ ci_lower <- method_combine(
 plot_quantile_bound(ci_lower$lower, bound_type = "lower")
 ```
 
-Upper limits come from re-running with the treatment labels switched, then
-negating and reversing:
+One-sided upper confidence intervals are obtained by re-running with the treatment labels switched, then negating and reversing the resulting bounds:
 
 ```r
 ub <- method_combine(Z = 1 - Z, Y = Y, N = n, k_vec = 1:n,
@@ -308,8 +254,7 @@ ub <- method_combine(Z = 1 - Z, Y = Y, N = n, k_vec = 1:n,
 upper <- -ub$lower[n:1]
 ```
 
-Two-sided intervals combine a lower and an upper limit, each at `ALPHA/2`, by
-Bonferroni.
+Two-sided intervals combine a lower and an upper limit by Bonferroni correction.
 
 ### Turning limits into a count
 
@@ -327,17 +272,12 @@ n_benefit <- sapply(thresholds, function(cc) {
 ::: {.callout-warning appearance="simple"}
 ### Read the direction from the right limit
 
-If a **larger outcome is good**, benefit is $\tau_i > c$ — read it from the
-**lower** limits. If a **larger outcome is bad**, benefit is $\tau_i < c$ — read
+If a **larger outcome is good**, benefit is $\tau_i > 0$ — read it from the
+**lower** limits. If a **larger outcome is bad**, benefit is $\tau_i < 0$ — read
 it from the **upper** limits.
 
-Spend the whole of $\alpha$ on the direction of interest. Reading one side off a
-two-sided interval uses $\alpha/2$ and is needlessly conservative.
 :::
 
-A second worked example applies the same machinery to the distracted-driving
-trial, whose outcome is continuous and effectively free of ties — the setting in
-which the rank statistic is least affected by tie-breaking.
 
 ## Next steps
 
