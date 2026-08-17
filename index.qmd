@@ -41,7 +41,7 @@ given measured baseline covariates.
 ::: {.analysis-card}
 ### How many patients benefit, and by how much?
 
-**Randomization-based.** Confidence bounds for quantiles of the individual treatment effects are derived from the trial's randomization mechanism alone, without modeling the outcome.
+**Randomization-based.** Confidence bounds for quantiles of the individual treatment effects are derived from the trial's randomization mechanism alone, without modeling the covariates.
 
 Because each patient is observed under one arm only, the distribution of
 individual effects is partially identified: the method returns confidence bounds
