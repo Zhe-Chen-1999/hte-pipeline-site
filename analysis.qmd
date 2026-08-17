@@ -21,7 +21,6 @@ use the sidebar to move between parts.
 | **Part II. Sensitivity analyses and cross-method comparison** | **2.1** Sensitivity of the CATE estimates to the BART prior specification · **2.2** Cross-method comparison against Bayesian Causal Forest, XGBoost T- and S-learners, and causal forest |
 | **Part III. Treatment effect heterogeneity by prognostic score** | **3.1** Prognostic score estimation · **3.2** Observed treatment effects across prognostic-score strata · **3.3** CATE as a function of the prognostic score, plus CART subgroup discovery by baseline prognosis |
 | **Part IV. Randomization-based inference for ITE quantiles** | Simultaneous confidence bands for effect quantiles · confidence bounds on the proportion of patients who benefit | 
-
 | **Appendix** | The cache status for that knit |
 
 ::: {.callout-important appearance="simple"}
