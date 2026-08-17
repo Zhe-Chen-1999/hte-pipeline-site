@@ -6,7 +6,7 @@ toc-depth: 2
 ---
 
 This walks through the pipeline from a standing start: what to install, what your
-data has to look like, what to change, and what each part produces. 
+data has to look like, and what each part produces. 
 
 ## 1. What you need
 
@@ -175,7 +175,7 @@ Two checks on whether the Part I picture survives scrutiny.
 
 **§2.1 — BART Prior Sensitivity.** BART is refit across a panel of prior configurations spanning under-regularized, default, CV-selected, and over-regularized regimes, by varying tree depth (`power`, `base`), leaf shrinkage (`k`), and ensemble size (`ntree`). 
 
-**§2.2 — cross-Method Comparison.** Bayesian Causal Forest, XGBoost T- and S-learners,
+**§2.2 — Cross-Method Comparison.** Bayesian Causal Forest, XGBoost T- and S-learners,
 and causal forest are fitted to the same data for a direct side-by-side comparison of their CATE distributions.
 
 ## 6. Part III — treatment effect heterogeneity by prognostic score
