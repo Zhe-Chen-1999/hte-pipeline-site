@@ -6,68 +6,58 @@ toc: false
 ::: {.hero}
 ## Heterogeneity of treatment effect analysis for randomized trials
 
-Two approaches to treatment effect heterogeneity — model-based estimation of
-conditional average effects, and randomization-based inference for the
-distribution of individual effects — in one reproducible pipeline, published with
-its code.
+A reproducible R Markdown pipeline for exploring treatment effect heterogeneity.
+
 :::
 
 ## The problem
 
-A randomized trial reports an average treatment effect over everyone enrolled.
-That average can conceal variation: the effect may differ from one patient to the
-next.
+Most trials are designed to evaluate the average treatment effect over everyone enrolled.
+But an average effect can conceal meaningful variation: the treatment may help some patients more than others, have little effect for some, or even cause harm.
 
 "Heterogeneity of treatment effect" covers a family of questions about that
-variation, and they are not the same question. How the average effect varies with
-measured baseline characteristics is one. How the individual effects are
-distributed across patients is another. They involve different estimands, admit
-different assumptions, and need different methods.
-
-This pipeline implements both, and keeps them separate.
+variation. 
+This pipeline approaches HTE from two complementary perspectives: 
+how the average treatment effect varies with measured baseline characteristics, 
+and how the individual treatment effects are distributed across patients. 
 
 ## Two approaches
 
 ::: {.card-grid}
 
 ::: {.analysis-card}
-### Model-based
 
-**Parts I–III.** Bayesian Additive Regression Trees estimate the conditional
-average treatment effect for each patient from their baseline covariates. A
-regression tree is then fitted to those estimates, summarising the fitted surface
-as a small set of covariate-defined subgroups.
+### How does the average treatment effect vary across observed baseline characteristics?
 
-Part II examines whether the result is sensitive to the BART prior and whether
-other estimators — Bayesian Causal Forest, causal forest, and gradient-boosted
-learners — agree with it. Part III asks whether the effect varies with a
-prognostic score summarising baseline risk.
+**Model-based: A fit-the-fit approach.** In the first stage, Bayesian Additive Regression Trees (BART) estimate the conditional
+average treatment effect (CATE) for each participant based on their baseline covariates. 
+In the second stage, the estimated CATEs are used as dependent variables in classification and regression trees to identify covariate-defined subgroups with differential treatment effects.
 
 **Estimand:** $E[Y(1) - Y(0) \mid X]$, the conditional average treatment effect
-given measured covariates.
+given measured baseline covariates.
+
 :::
 
 ::: {.analysis-card}
-### Randomization-based
+### How many patients benefit, and by how much?
 
-**Part IV.** Confidence bounds on the quantiles of the individual treatment
-effects, derived from the trial's randomization alone, with no outcome model.
+**Randomization-based.** Confidence bounds for quantiles of the individual treatment effects are derived from the trial's randomization mechanism alone, without modeling the outcome.
 
 Because each patient is observed under one arm only, the distribution of
 individual effects is partially identified: the method returns confidence bounds
-rather than point estimates, and those bounds are valid in finite samples under
-the assignment mechanism.
+rather than point estimates, and those bounds are finite-sample exact under
+the randomized assignment mechanism.
 
-**Estimand:** quantiles of $\tau_i = Y_i(1) - Y_i(0)$ across the randomized
+**Estimand:** Quantiles of $\tau_i = Y_i(1) - Y_i(0)$ across the randomized
 sample.
+
+
 :::
 
 :::
 
 ## Start here
 
-- **[Tutorial](tutorial.qmd)** — how to run the pipeline on your own trial, step
-  by step, with the code.
-- **[Full analysis](analysis.qmd)** — the complete rendered document, including
-  the full reference list for the methods used.
-- **[People](people.qmd)** — who built it, and how to reach us.
+- **[Tutorial](tutorial.qmd)** — A step-by-step guide to running the pipeline on your own trial.
+- **[Full analysis](analysis.qmd)** — The complete rendered analysis.
+- **[People](people.qmd)** — Meet the team and find out how to get in touch.
