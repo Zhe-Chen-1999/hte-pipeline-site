@@ -3,7 +3,7 @@
 No installation, no git commands. Everything below happens in a web browser, and
 the site rebuilds itself about a minute after you save.
 
-**The pattern is always the same:** open the file on GitHub → click the pencil
+The pattern is always the same: open the file on GitHub → click the pencil
 icon (top right) → change the text → click **Commit changes** at the bottom.
 
 ---
@@ -12,9 +12,9 @@ icon (top right) → change the text → click **Commit changes** at the bottom.
 
 | What you see on the site | File to edit |
 |---|---|
-| Home page — headline, the two blue boxes, everything | `index.qmd` |
+| Home page | `index.qmd` |
 | Tutorial page | `tutorial.qmd` |
-| "Full analysis" page — the text around the link | `analysis.qmd` |
+| Full analysis page | `analysis.qmd` |
 | People — names, roles, links | `people.yml` |
 | The menu bar at the top | `_quarto.yml` |
 | The big rendered analysis itself | `output/full-analysis.html` |
@@ -90,22 +90,6 @@ Every block on a page starts with a `##` heading and runs until the next `##`.
 To remove one, delete from its heading down to (but not including) the next
 heading.
 
-For example, to drop the "Citation" block from the home page, delete this whole
-run of lines from `index.qmd`:
-
-```markdown
-## Citation
-
-The randomization-based methods in Part IV are developed in:
-
-> Chen, Z. and Li, X. *Enhanced inference for distributions and quantiles of
-> individual treatment effects in various experiments.* JASA.
-
-This work is supported by **NHLBI R01HL168202**.
-```
-
-Then commit. Nothing else needs changing.
-
 **To remove a whole page** — say the People page — do both of these:
 
 1. Delete the file `people.qmd` (open it, click the **trash icon**, commit).
@@ -126,12 +110,12 @@ Open `people.yml`. Copy one block, paste it where you want the person to appear,
 and change the values:
 
 ```yaml
-- name: Jane Doe, PhD
-  role: Postdoctoral Researcher
-  affiliation: Department of Biostatistics, University of Pennsylvania
-  email: jane.doe@pennmedicine.upenn.edu
-  url: https://example.com/jane
-  github: https://github.com/janedoe
+- name: Zhe Chen, PhD
+  role: Research Assistant Professor
+  affiliation: University of Pennsylvania
+  email: zhe.chen@pennmedicine.upenn.edu
+  url: https://example.com
+  github: https://github.com
 ```
 
 People appear in the same order as the file. Only `name` and `role` are required
@@ -165,7 +149,7 @@ repository and never should be. Only the rendered output is published.
 2. Add one line to that person's entry in `people.yml`:
 
    ```yaml
-     photo: assets/jane-doe.jpg
+     photo: assets/zhe-chen.jpg
    ```
 
 ---
