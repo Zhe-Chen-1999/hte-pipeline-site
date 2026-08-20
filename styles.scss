@@ -149,7 +149,11 @@ h1.title {
     font-style: italic;
     margin-top: 0.15rem;
   }
-  .card-links { margin-top: 0.5rem; font-size: 0.86rem; }
+  .card-links {
+    margin-top: 0.5rem;
+    font-size: 0.86rem;
+    a { margin-right: 0.9rem; white-space: nowrap; }
+  }
 }
 
 @media (prefers-color-scheme: dark) {

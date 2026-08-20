@@ -1,17 +1,17 @@
 <!-- Card template for publications.qmd. Lines must start at column 0, or
-     markdown will treat the indentation as a code block. -->
+     markdown will treat the indentation as a code block.
+
+     The link tags below are all on ONE line on purpose. If each sat on its own
+     line, a missing middle field (say no `code`) would leave a blank line, and
+     markdown reads that as a paragraph break — putting the remaining links on a
+     new line for some papers but not others. -->
 <div class="pub-list">
 <% for (const item of items) { %>
 <div class="pub-card">
 <div class="pub-title"><%- item.title %></div>
 <% if (item.authors) { %><div class="pub-authors"><%= item.authors %></div><% } %>
 <% if (item.journal) { %><div class="pub-journal"><%= item.journal %></div><% } %>
-<div class="card-links">
-<% if (item.pdf) { %><a href="<%- item.pdf %>" target="_blank">PDF</a><% } %>
-<% if (item.journal_url) { %><a href="<%- item.journal_url %>" target="_blank">Journal</a><% } %>
-<% if (item.code) { %><a href="<%- item.code %>" target="_blank">Code</a><% } %>
-<% if (item.pmid) { %><a href="https://pubmed.ncbi.nlm.nih.gov/<%- item.pmid %>/" target="_blank">PubMed</a><% } %>
-</div>
+<div class="card-links"><% if (item.pdf) { %><a href="<%- item.pdf %>" target="_blank">PDF</a><% } %><% if (item.journal_url) { %><a href="<%- item.journal_url %>" target="_blank">Journal</a><% } %><% if (item.code) { %><a href="<%- item.code %>" target="_blank">Code</a><% } %><% if (item.pmid) { %><a href="https://pubmed.ncbi.nlm.nih.gov/<%- item.pmid %>/" target="_blank">PubMed</a><% } %></div>
 </div>
 <% } %>
 </div>

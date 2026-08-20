@@ -13,8 +13,7 @@ listing:
 ---
 
 Methodological and applied work on treatment effect heterogeneity in randomized
-trials. Papers are open access where the publisher allows; **PDF** opens the full
-text, **Journal** the publisher's page, and **Code** the analysis repository.
+trials.
 
 ## Peer-reviewed
 
