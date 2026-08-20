@@ -16,6 +16,8 @@ icon (top right) → change the text → click **Commit changes** at the bottom.
 | Tutorial page | `tutorial.qmd` |
 | Full analysis page | `analysis.qmd` |
 | People — names, roles, links | `people.yml` |
+| Publications | `publications.yml` |
+| Preprints | `preprints.yml` |
 | The menu bar at the top | `_quarto.yml` |
 | The big rendered analysis itself | `output/full-analysis.html` |
 | Colours, fonts, spacing | `styles.scss` |
@@ -127,7 +129,36 @@ is the usual cause of a failed build.
 
 ---
 
-## Recipe 5 — Update the rendered analysis
+## Recipe 5 — Add a publication
+
+Open `publications.yml`. Copy one block, paste it at the **top** (newest first),
+and change the values:
+
+```yaml
+- title: The paper's title
+  authors: Smith A, Jones B, Harhay MO
+  journal: Journal Name, 2026;12(3):123-145
+  pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC1234567/pdf/
+  journal_url: https://doi.org/10.1000/example
+  code: https://github.com/harhay-lab/the-repo
+  pmid: "12345678"
+```
+
+Each line adds one link to the card — **PDF**, **Journal**, **Code**, **PubMed**.
+Leave out any you don't have and that link simply won't appear. Only `title` is
+required.
+
+For an open-access paper in PubMed Central, the PDF link is
+`https://pmc.ncbi.nlm.nih.gov/articles/PMCxxxxxxx/pdf/` — find the PMC number on
+the paper's PubMed page.
+
+**Preprints** work identically but live in `preprints.yml`. When a preprint is
+published, move its block across into `publications.yml` and update the journal
+details.
+
+---
+
+## Recipe 6 — Update the rendered analysis
 
 When you re-knit the pipeline, replace the file on the site:
 
@@ -142,7 +173,7 @@ repository and never should be. Only the rendered output is published.
 
 ---
 
-## Recipe 6 — Add a photo
+## Recipe 7 — Add a photo
 
 1. Open the `assets` folder → **Add file → Upload files** → drag the image in →
    commit. Square, around 400×400 pixels, works best.

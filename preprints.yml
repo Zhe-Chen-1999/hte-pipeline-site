@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# THE PREPRINTS SECTION IS BUILT FROM THIS FILE.
+#
+# Same format as publications.yml. Use `journal` for the server and posting date,
+# e.g. "arXiv:2501.01234, 2026" or "medRxiv, 2026". When a preprint is published,
+# move its block into publications.yml and update the details.
+#
+# Delete the example below once you add a real one — an entry starting with "#"
+# is ignored.
+# ---------------------------------------------------------------------------
+
+# - title: >
+#     Enhanced inference for distributions and quantiles of individual treatment
+#     effects in various experiments
+#   authors: Chen Z, Li X
+#   journal: arXiv, 2026
+#   pdf: https://arxiv.org/pdf/xxxx.xxxxx
+#   journal_url: https://arxiv.org/abs/xxxx.xxxxx
+#   code: https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles
+
+[]

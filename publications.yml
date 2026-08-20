@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# THE PUBLICATIONS PAGE IS BUILT FROM THIS FILE.
+#
+# To add a paper: copy one block below, paste it at the TOP (newest first), and
+# change the values. Keep the leading "- " and the two-space indentation.
+#
+#   title    - the paper's title
+#   authors  - author list as you want it shown
+#   journal  - journal, year, volume/pages
+#   pdf      - link that opens the PDF. For open-access papers in PubMed Central
+#              this is https://pmc.ncbi.nlm.nih.gov/articles/PMCxxxxxxx/pdf/
+#   journal_url - the paper's page on the journal site (use the DOI link)
+#   code     - GitHub repository for the analysis code
+#   pmid     - PubMed ID, shown as a small link
+#
+# Only `title` is required. Delete any line you don't have — the corresponding
+# link simply won't appear.
+# ---------------------------------------------------------------------------
+
+- title: Uncovering treatment effect heterogeneity in pragmatic gerontology trials
+  authors: Li C, Allore H, Harhay MO, Li F, Tong G
+  journal: Experimental Gerontology, 2026;215:113055
+  pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC13054727/pdf/
+  journal_url: https://doi.org/10.1016/j.exger.2026.113055
+  pmid: "41628841"
+
+- title: >
+    Treatment effect heterogeneity in acute kidney injury incidence following
+    intravenous antihypertensive administration for severe blood pressure
+    elevation during hospitalization
+  authors: Ghazi L, Chen X, Harhay MO, Hu L, Biswas A, Peixoto AJ, Li F, Wilson FP
+  journal: American Journal of Kidney Diseases, 2025;85(4):442–453
+  journal_url: https://doi.org/10.1053/j.ajkd.2024.09.011
+  pmid: "39580068"
+
+- title: >
+    A Bayesian machine learning approach for estimating heterogeneous survivor
+    causal effects: applications to a critical care trial
+  authors: Chen X, Harhay MO, Tong G, Li F
+  journal: Annals of Applied Statistics, 2024;18(1):350–374
+  pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC10919396/pdf/
+  journal_url: https://doi.org/10.1214/23-aoas1792
+  pmid: "38455841"
+
+- title: >
+    Causal Bayesian machine learning to assess treatment effect heterogeneity by
+    dexamethasone dose for patients with COVID-19 and severe hypoxemia
+  authors: Blette BS, Granholm A, Li F, Shankar-Hari M, Lange T, Munch MW, Møller MH, Perner A, Harhay MO
+  journal: Scientific Reports, 2023;13(1):6570
+  pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC10120498/pdf/
+  journal_url: https://doi.org/10.1038/s41598-023-33425-3
+  code: https://github.com/harhay-lab/Covid-Steroid-HTE
+  pmid: "37085591"

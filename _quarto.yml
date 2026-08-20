@@ -27,6 +27,8 @@ website:
         text: Tutorial
       - href: analysis.qmd
         text: Full analysis
+      - href: publications.qmd
+        text: Publications
       - href: people.qmd
         text: People
     right:

@@ -119,3 +119,41 @@ h1.title {
     border-color: #333a42;
   }
 }
+
+// Publications list — a vertical list rather than a card grid, since titles and
+// author lists are long and read better full-width.
+.pub-list { margin: 1.2rem 0 2rem 0; }
+
+.pub-card {
+  border-left: 3px solid $primary;
+  padding: 0.7rem 0 0.7rem 1rem;
+  margin-bottom: 1.3rem;
+
+  .pub-title {
+    font-family: $headings-font-family;
+    font-size: 1.14rem;
+    font-weight: 600;
+    line-height: 1.35;
+
+    // Multi-line YAML titles arrive as a rendered markdown paragraph
+    p { margin: 0; }
+  }
+  .pub-authors {
+    font-size: 0.9rem;
+    color: #4a5560;
+    margin-top: 0.25rem;
+  }
+  .pub-journal {
+    font-size: 0.88rem;
+    color: #5b6570;
+    font-style: italic;
+    margin-top: 0.15rem;
+  }
+  .card-links { margin-top: 0.5rem; font-size: 0.86rem; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .pub-card {
+    .pub-authors, .pub-journal { color: #b6bcc4; }
+  }
+}
