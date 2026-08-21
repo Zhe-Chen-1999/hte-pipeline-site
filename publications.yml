@@ -17,12 +17,28 @@
 # link simply won't appear.
 # ---------------------------------------------------------------------------
 
+- title: Semiparametric principal stratification analysis beyond monotonicity
+  authors: "Tong J*, Kahan BC, Harhay MO, Li F"
+  journal: Statistica Sinica, forthcoming
+  pdf: https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2025-0066_na.pdf
+  journal_url: https://doi.org/10.5705/ss.202025.0066
+  code: https://cran.r-project.org/package=PSor
+
 - title: Uncovering treatment effect heterogeneity in pragmatic gerontology trials
   authors: Li C, Allore H, Harhay MO, Li F, Tong G
   journal: Experimental Gerontology, 2026;215:113055
   pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC13054727/pdf/
   journal_url: https://doi.org/10.1016/j.exger.2026.113055
   pmid: "41628841"
+
+- title: >
+    Doubly robust estimation and sensitivity analysis with outcomes truncated by
+    death in multi-arm clinical trials
+  authors: "Tong J*, Cheng C*, Tong G, Harhay MO, Li F"
+  journal: Statistics in Medicine, 2025;44(28-30)
+  pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC13010473/pdf/
+  journal_url: https://doi.org/10.1002/sim.70297
+  pmid: "41363831"
 
 - title: >
     Treatment effect heterogeneity in acute kidney injury incidence following

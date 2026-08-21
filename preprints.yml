@@ -18,4 +18,10 @@
 #   journal_url: https://arxiv.org/abs/xxxx.xxxxx
 #   code: https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles
 
-[]
+- title: >
+    Beyond principal ignorability: nonparametric sensitivity bounds for
+    principal stratification
+  authors: Chen X, Harhay MO, Li F
+  journal: arXiv:2606.01669, June 2026
+  pdf: https://arxiv.org/pdf/2606.01669
+  journal_url: https://arxiv.org/abs/2606.01669
