@@ -1,5 +1,6 @@
 ---
-title: "Full analysis"
+title: "HTE analysis pipeline"
+subtitle: "Conditional average effects, subgroup discovery, and randomization-based inference for individual effects"
 toc: false
 ---
 
@@ -10,7 +11,7 @@ It is a large document with its own table of contents. Open it in a new tab and
 use the sidebar to move between parts.
 ::::
 
-[Open the full analysis →](output/full-analysis.html){.btn .btn-primary target="_blank"}
+[Open the full analysis →](../output/full-analysis.html){.btn .btn-primary target="_blank"}
 
 ## What is in it
 

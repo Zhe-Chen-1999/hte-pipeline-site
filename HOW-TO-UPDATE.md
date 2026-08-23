@@ -14,12 +14,15 @@ icon (top right) → change the text → click **Commit changes** at the bottom.
 |---|---|
 | Home page | `index.qmd` |
 | Tutorial page | `tutorial.qmd` |
-| Full analysis page | `analysis.qmd` |
+| Analyses landing page | `analyses/index.qmd` |
+| HTE pipeline page | `analyses/hte-pipeline.qmd` |
+| SACE / CSACE page | `analyses/sace-csace.qmd` |
+| Project page | `project.qmd` |
 | People — names, roles, links | `people.yml` |
 | Publications | `publications.yml` |
 | Preprints | `preprints.yml` |
 | The menu bar at the top | `_quarto.yml` |
-| The big rendered analysis itself | `output/full-analysis.html` |
+| The rendered analyses themselves | `output/full-analysis.html`, `output/sace-csace.html` |
 | Colours, fonts, spacing | `styles.scss` |
 
 ---

@@ -3,6 +3,7 @@ project:
   output-dir: _site
   render:
     - "*.qmd"
+    - "analyses/*.qmd"
     - "!HOW-TO-UPDATE.md"   # maintainer instructions: repo only, not a public page
   resources:
     - "output/*.html"       # the knitted analysis, copied through as-is
@@ -23,10 +24,18 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: project.qmd
+        text: Project
+      - text: Analyses
+        menu:
+          - href: analyses/index.qmd
+            text: All analyses
+          - href: analyses/hte-pipeline.qmd
+            text: HTE analysis pipeline
+          - href: analyses/sace-csace.qmd
+            text: SACE / CSACE
       - href: tutorial.qmd
         text: Tutorial
-      - href: analysis.qmd
-        text: Full analysis
       - href: publications.qmd
         text: Publications
       - href: people.qmd

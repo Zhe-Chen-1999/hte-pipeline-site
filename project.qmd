@@ -1,0 +1,95 @@
+---
+title: "Project"
+subtitle: "Advancing the design, analysis, and interpretation of ARDS trials using modern statistical tools"
+toc: true
+---
+
+::: {.callout-note appearance="simple"}
+Supported by **NHLBI R01HL168202**.
+Principal Investigators: [Michael O. Harhay](https://dbei.med.upenn.edu/staff/michael-harhay-phd-mph/),
+University of Pennsylvania, and [Fan Li](https://ysph.yale.edu/profile/fan-f-li/), Yale University.
+:::
+
+## Project summary
+
+Acute respiratory distress syndrome (ARDS) is a common and devastating cause of
+acute respiratory failure. There are 200,000 annual ARDS cases in the U.S.
+(2.5-5 million globally), which account for 60,000 deaths and enormous physical,
+cognitive, and psychosocial morbidity among survivors. Yet, despite more than
+200 randomized clinical trials (RCTs), only two interventions – low-tidal-volume
+ventilation and prone positioning – have definitively improved outcomes using a
+traditional frequentist, null hypothesis, p-value-based trial design and
+analysis. The research team contends that assessing data in this framework may
+overlook informative trial data and delay or thwart the identification of
+promising therapies, especially when p-values fall just short of the 0.05
+threshold, which has occurred in several major ARDS trials. As an alternative
+methodological approach to maximize the clinical insight gained from RCTs, the
+team will reanalyze 29 international and NHLBI-funded ARDS RCTs that enrolled
+more than 15,000 individuals using Bayesian causal inference and machine
+learning methods they have developed and validated. Most therapies they will
+examine are either low-cost or easily implemented practices and thus have the
+potential for high impact (e.g., ventilator settings, fluid management,
+corticosteroids, statins, beta-agonists, vitamin D). In Aim 1, instead of using
+statistical significance, they will quantify the probability of a beneficial
+treatment effect and its probable magnitude. That is, instead of using a pre-
+specified p-value to determine whether an intervention has at least the
+hypothesized mortality benefit, they will derive the probability that a given
+therapy is associated with clinically relevant absolute mortality reductions of
+at least 2%, 4%, and 6%. They will examine each intervention with noninformative
+Bayesian ‘priors’ and then with standardized and meta-analysis-derived priors to
+reduce subjectivity and interrogate clinical efficacy across the spectrum of
+harm and benefit possibilities. In Aim 2, they will use Bayesian Additive
+Regression Trees (BART) formulations they developed to understand which ARDS
+patient types are most likely to benefit from, or be harmed by, a therapy, i.e.,
+so-called ‘heterogeneity of treatment effect’ (HTE). Unlike prior HTE research
+in ARDS, their approach does not focus on one-by-one, binary splits of
+characteristics but rather can identify complex, multivariable, nonlinear
+treatment effect modification. Aim 2a will focus on mortality and adverse
+events. Aim 2b will apply a novel BART variation to identify HTE in outcomes
+such as ventilator duration or hospital stay whose observation is truncated by
+death. By estimating causal effects on these outcomes among always-survivors,
+their new method avoids biases associated with prior approaches, enabling
+accurate identification of clinically meaningful subgroups. Aim 3 focuses on
+developing and disseminating free, cloud-based software to support future ARDS
+trials. This work promises to improve the value of the knowledge gained from
+past and future ARDS RCTs by identifying truly beneficial treatments and
+informing how these therapies can be individually tailored for this high-
+mortality, high-morbidity syndrome.
+
+## Public health statement
+
+ARDS is a common condition of severe respiratory failure precipitated by a
+variety of insults (e.g., Covid-19 and other respiratory viruses, sepsis, and
+pneumonia), with hospital mortality of 30–40% and significant morbidity among
+survivors. ARDS randomized clinical trials (RCTs) have been hampered by (1)
+analyses that yield a strict binary conclusion concerning treatment efficacy,
+(2) inadequate statistical methods to assess heterogeneity of treatment effect
+among varying patient types, and (3) death- truncated non-mortality outcomes
+such as length of stay. To offer more intuitive probabilistic interpretations of
+an intervention’s efficacy and thus maximally leverage the information learned
+from a trial, the researchers will apply a suite of Bayesian causal inference
+and machine learning methods to 29 international and NIH/NHLBI- funded
+multicenter ARDS RCTs to (1) determine the probability that the tested
+interventions produce benefit or harm on the absolute and relative scale for
+both mortality and non-mortality clinical outcomes, (2) quantify the degree of
+confidence in these conclusions, and (3) identify clinically meaningful
+subgroups most likely to benefit.
+
+## The three aims
+
+**Aim 1 — Probability of benefit, not statistical significance.**
+Quantify the probability that a therapy produces a clinically relevant absolute
+mortality reduction of at least 2%, 4%, and 6%, examined under non-informative,
+standardized, and meta-analysis-derived priors.
+
+**Aim 2 — Which patients benefit.**
+Use Bayesian Additive Regression Trees to identify complex, multivariable,
+nonlinear treatment effect modification rather than one-by-one binary subgroup
+splits. Aim 2a addresses mortality and adverse events; Aim 2b applies a BART
+variation to outcomes truncated by death, such as ventilator duration and
+hospital stay, estimating causal effects among always-survivors.
+
+**Aim 3 — Open, reusable software.**
+Develop and disseminate free, cloud-based software to support future ARDS
+trials. This site is part of that aim: the [analyses](analyses/index.qmd) are
+published with their source code.

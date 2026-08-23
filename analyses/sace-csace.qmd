@@ -1,0 +1,48 @@
+---
+title: "SACE and CSACE analysis using BART"
+subtitle: "Treatment effects on outcomes truncated by death"
+toc: false
+---
+
+When an outcome can only be measured on patients who survive — ventilator-free
+days, length of stay, functional status — comparing arms among survivors
+compares different sets of people, because survival is itself affected by
+treatment. The **survivor average causal effect (SACE)** avoids this by defining
+the effect among *always-survivors*: patients who would live under either arm.
+
+This analysis estimates the SACE and the **conditional SACE (CSACE)** using
+Bayesian Additive Regression Trees, then applies the same "fit-the-fit" idea used
+in the [HTE pipeline](hte-pipeline.qmd) — a regression tree fitted to the
+estimated conditional effects — to describe which patients the effect varies
+across.
+
+:::: {.callout-tip appearance="simple"}
+It is a large document with its own table of contents. Open it in a new tab and
+use the sidebar to move between sections.
+::::
+
+[Open the SACE / CSACE analysis →](../output/sace-csace.html){.btn .btn-primary target="_blank"}
+
+## What is in it
+
+| Section | Contents |
+|---|---|
+| **Introduction** | The always-survivor estimand, and why a survivors-only comparison is not a causal contrast |
+| **Functions** | The two functions the analysis is built from, with their parameters and return values documented |
+| **Step 1** | Estimating the SACE and CSACE with BART: principal strata membership and stratum-specific outcomes are modelled jointly |
+| **Step 2** | The "fit-the-fit" approach — a classification and regression tree fitted to the estimated CSACEs, giving interpretable subgroups |
+| **ARDS ARMA data analysis** | The methods applied to the ARDS Network ARMA trial of low tidal volume ventilation |
+| **Additional plots** | Supporting figures |
+
+## Relation to the HTE pipeline
+
+Both use BART to estimate a per-patient conditional effect and then fit a tree to
+those estimates for interpretability. They differ in the estimand: the
+[HTE pipeline](hte-pipeline.qmd) targets the conditional average treatment effect
+on an outcome observed for everyone, while this analysis targets the effect among
+always-survivors when the outcome is truncated by death.
+
+Methodological background is in the
+[publications](../publications.qmd), particularly Chen, Harhay, Tong and Li
+(*Annals of Applied Statistics*, 2024) and Tong and colleagues (*Statistics in
+Medicine*, 2025).

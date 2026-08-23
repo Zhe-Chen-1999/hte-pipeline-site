@@ -281,5 +281,5 @@ it from the **upper** limits.
 
 ## Next steps
 
-- [See it run end to end](analysis.qmd) on real trial data.
+- [See it run end to end](analyses/index.qmd) on real trial data.
 - [Get in touch](people.qmd) if you would like help applying it to your trial.
