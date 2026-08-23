@@ -75,21 +75,8 @@ both mortality and non-mortality clinical outcomes, (2) quantify the degree of
 confidence in these conclusions, and (3) identify clinically meaningful
 subgroups most likely to benefit.
 
-## The three aims
+## Software and dissemination
 
-**Aim 1 — Probability of benefit, not statistical significance.**
-Quantify the probability that a therapy produces a clinically relevant absolute
-mortality reduction of at least 2%, 4%, and 6%, examined under non-informative,
-standardized, and meta-analysis-derived priors.
-
-**Aim 2 — Which patients benefit.**
-Use Bayesian Additive Regression Trees to identify complex, multivariable,
-nonlinear treatment effect modification rather than one-by-one binary subgroup
-splits. Aim 2a addresses mortality and adverse events; Aim 2b applies a BART
-variation to outcomes truncated by death, such as ventilator duration and
-hospital stay, estimating causal effects among always-survivors.
-
-**Aim 3 — Open, reusable software.**
-Develop and disseminate free, cloud-based software to support future ARDS
-trials. This site is part of that aim: the [analyses](analyses/index.qmd) are
-published with their source code.
+Aim 3 of the project is to develop and disseminate free, cloud-based software to
+support future ARDS trials. This site is part of that aim: the
+[analyses](analyses/index.qmd) are published with their source code.

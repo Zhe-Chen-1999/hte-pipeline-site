@@ -6,7 +6,8 @@ toc: false
 ::: {.hero}
 ## Heterogeneity of treatment effect analysis for randomized trials
 
-A reproducible R Markdown pipeline for exploring treatment effect heterogeneity.
+Reproducible R Markdown pipelines for exploring treatment effect heterogeneity —
+for outcomes observed on every patient, and for outcomes truncated by death.
 
 :::
 
@@ -22,6 +23,9 @@ how the average treatment effect varies with measured baseline characteristics,
 and how the individual treatment effects are distributed across patients. 
 
 ## Two approaches
+
+Both apply when the outcome is observed for every randomized patient. Together
+they make up the **[HTE analysis pipeline](analyses/hte-pipeline.qmd)**.
 
 ::: {.card-grid}
 
@@ -56,8 +60,35 @@ sample.
 
 :::
 
+## When the outcome is truncated
+
+Both approaches above assume the outcome is defined for everyone. For
+patient-centered outcomes that can only be measured on survivors, it is not:
+participants who die during follow-up have no outcome to observe, and comparing
+survivors between arms compares different sets of people, because survival is
+itself affected by treatment.
+
+::: {.card-grid}
+
+::: {.analysis-card}
+### What is the effect among patients who would survive either way?
+
+**[Heterogeneous survivor average causal effects](analyses/sace-csace.qmd).**
+Principal stratification defines the estimand on the **always-survivors**
+stratum — participants who would survive under either arm. BART estimates both
+the average and the heterogeneous causal effects there, using separate mean
+models for the potential outcomes and for latent stratum membership. The
+fit-the-fit step then applies as before, with a tree fitted to the estimated
+conditional effects.
+
+**Estimand:** $E[Y(1) - Y(0) \mid X, \text{always-survivor}]$.
+:::
+
+:::
+
 ## Start here
 
 - **[Tutorial](tutorial.qmd)** — A step-by-step guide to running the pipeline on your own trial.
-- **[Analyses](analyses/index.qmd)** — The complete rendered analysis.
+- **[Analyses](analyses/index.qmd)** — The complete rendered analyses.
+- **[Project](project.qmd)** — The research programme this work belongs to.
 - **[People](people.qmd)** — Meet the team and find out how to get in touch.

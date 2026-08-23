@@ -5,44 +5,34 @@ toc: false
 ---
 
 Each analysis below is a reproducible document: the methods, the code that ran
-them, and the output in one place.
+them, and the output in one place. They differ in what the outcome data allow.
 
 ::: {.card-grid}
 
 ::: {.analysis-card}
 ### [HTE analysis pipeline](hte-pipeline.qmd)
 
-Conditional average treatment effects estimated with BART, subgroups discovered
-by fitting a tree to those estimates, sensitivity to the prior and to other
-estimators, heterogeneity by prognostic score, and randomization-based bounds on
-the distribution of individual effects.
-
-Outcome observed for everyone.
+For outcomes observed on every randomized patient. Conditional average treatment
+effects estimated with BART, subgroups discovered by fitting a tree to those
+estimates, sensitivity to the prior and to other estimators, heterogeneity by
+prognostic score, and randomization-based bounds on the distribution of
+individual effects.
 :::
 
 ::: {.analysis-card}
-### [SACE and CSACE using BART](sace-csace.qmd)
+### [Heterogeneous survivor average causal effects](sace-csace.qmd)
 
-Treatment effects on outcomes truncated by death, estimated among
-always-survivors, with the same fit-the-fit approach applied to the estimated
-conditional effects. Applied to the ARDS Network ARMA trial.
-
-Outcome observable only in survivors.
+For outcomes truncated by a terminal event, where the outcome is undefined or
+unobserved for participants who die. Principal stratification defines the effect
+among always-survivors, and BART estimates both the average and heterogeneous
+effects on that stratum.
 :::
 
 :::
 
-## Reusing this work
+The [tutorial](../tutorial.qmd) walks through running the HTE analysis pipeline
+on a new trial, for a binary or continuous outcome observed on all patients. It
+does not cover the survivor-effect analysis.
 
-The analyses share a few components:
-
-- **Multi-chain BART** — [`clusterfunctions.R`](../code/clusterfunctions.R),
-  which runs several `BART` chains in parallel and collects them into one
-  posterior.
-- **Randomization-based ITE inference** — the `RIQITE` package with the helper
-  functions from
-  [Enhanced inference for ITE quantiles](https://github.com/Zhe-Chen-1999/Enhanced_inference_for_ITE_quantiles).
-
-The [tutorial](../tutorial.qmd) walks through running the HTE pipeline on a new
-trial. If you would like help applying any of this to a trial of your own, please
+If you would like help applying any of this to a trial of your own, please
 [get in touch](../people.qmd).

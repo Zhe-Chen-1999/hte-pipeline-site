@@ -1,48 +1,69 @@
 ---
-title: "SACE and CSACE analysis using BART"
-subtitle: "Treatment effects on outcomes truncated by death"
+title: "Heterogeneous survivor average causal effects"
+subtitle: "Treatment effect heterogeneity when outcomes are truncated by a terminal event"
 toc: false
 ---
 
-When an outcome can only be measured on patients who survive — ventilator-free
-days, length of stay, functional status — comparing arms among survivors
-compares different sets of people, because survival is itself affected by
-treatment. The **survivor average causal effect (SACE)** avoids this by defining
-the effect among *always-survivors*: patients who would live under either arm.
+Extensive tools exist for studying treatment effect heterogeneity when outcomes
+are fully observed. Far fewer exist when a patient-centered outcome is
+**truncated by a terminal event** such as death — where, for participants who
+die during follow-up, the outcome is unobservable, undefined, or only partly
+observed.
 
-This analysis estimates the SACE and the **conditional SACE (CSACE)** using
-Bayesian Additive Regression Trees, then applies the same "fit-the-fit" idea used
-in the [HTE pipeline](hte-pipeline.qmd) — a regression tree fitted to the
-estimated conditional effects — to describe which patients the effect varies
-across.
+Comparing survivors between arms does not solve this, because survival is itself
+affected by treatment and the two survivor groups are therefore different sets of
+people. **Principal stratification** provides a framework in which valid causal
+conclusions can be drawn: the estimand is defined on the **always-survivors**
+stratum, the participants who would survive under either arm.
 
-:::: {.callout-tip appearance="simple"}
-It is a large document with its own table of contents. Open it in a new tab and
-use the sidebar to move between sections.
-::::
+This analysis estimates both the average causal effect and *heterogeneous* causal
+effects among always-survivors, using Bayesian Additive Regression Trees to
+flexibly specify **separate mean models for the potential outcomes and for latent
+stratum membership**. A regression tree is then fitted to the estimated
+conditional effects — the same "fit-the-fit" step used in the
+[HTE analysis pipeline](hte-pipeline.qmd) — to describe which patients the effect
+varies across.
 
-[Open the SACE / CSACE analysis →](../output/sace-csace.html){.btn .btn-primary target="_blank"}
+[Open the analysis →](../output/sace-csace.html){.btn .btn-primary target="_blank"}
 
 ## What is in it
 
 | Section | Contents |
 |---|---|
-| **Introduction** | The always-survivor estimand, and why a survivors-only comparison is not a causal contrast |
+| **Introduction** | Truncation by a terminal event, the principal stratification framework, and the always-survivors estimand |
 | **Functions** | The two functions the analysis is built from, with their parameters and return values documented |
-| **Step 1** | Estimating the SACE and CSACE with BART: principal strata membership and stratum-specific outcomes are modelled jointly |
-| **Step 2** | The "fit-the-fit" approach — a classification and regression tree fitted to the estimated CSACEs, giving interpretable subgroups |
-| **ARDS ARMA data analysis** | The methods applied to the ARDS Network ARMA trial of low tidal volume ventilation |
+| **Step 1** | Estimating the SACE and the conditional SACE with BART, via separate mean models for the potential outcomes and for latent stratum membership |
+| **Step 2** | The "fit-the-fit" approach — a classification and regression tree fitted to the estimated conditional effects, giving interpretable subgroups |
+| **ARDS ARMA data analysis** | The methods applied to the ARDSNetwork ARMA trial of low tidal volume ventilation |
 | **Additional plots** | Supporting figures |
 
-## Relation to the HTE pipeline
+## The motivating application
 
-Both use BART to estimate a per-patient conditional effect and then fit a tree to
-those estimates for interpretability. They differ in the estimand: the
-[HTE pipeline](hte-pipeline.qmd) targets the conditional average treatment effect
-on an outcome observed for everyone, while this analysis targets the effect among
-always-survivors when the outcome is truncated by death.
+In the ARDSNetwork ARMA trial, low tidal volume ventilation showed an overall
+benefit for participants with acute lung injury on the outcome of **time to
+returning home**, alongside substantial heterogeneity among always-survivors —
+driven most strongly by **biologic sex** and the **alveolar–arterial oxygen
+gradient at baseline**, a physiologic measure of lung function and degree of
+hypoxemia. Findings of this kind are intended to guide the prognostic enrichment
+of future trials.
 
-Methodological background is in the
-[publications](../publications.qmd), particularly Chen, Harhay, Tong and Li
-(*Annals of Applied Statistics*, 2024) and Tong and colleagues (*Statistics in
-Medicine*, 2025).
+## Relation to the HTE analysis pipeline
+
+Both estimate a per-patient conditional effect with BART and then fit a tree to
+those estimates for interpretability. They differ in the estimand and in what
+that requires:
+
+|  | [HTE pipeline](hte-pipeline.qmd) | This analysis |
+|---|---|---|
+| Outcome | observed for every randomized patient | truncated by a terminal event |
+| Estimand | conditional average treatment effect | conditional effect among always-survivors |
+| Extra structure needed | none | principal stratification; latent stratum membership modelled |
+
+Because stratum membership is latent and only partially identified from the
+observed data, the randomization-based quantile inference available in Part IV of
+the HTE pipeline does not carry over directly to this setting.
+
+Full methodological detail is in Chen, Harhay, Tong and Li, *A Bayesian machine
+learning approach for estimating heterogeneous survivor causal effects:
+applications to a critical care trial*, **Annals of Applied Statistics**, 2024 —
+listed on the [publications](../publications.qmd) page.
