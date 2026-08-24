@@ -31,8 +31,7 @@ effects on that stratum.
 :::
 
 The [tutorial](../tutorial.qmd) walks through running the HTE analysis pipeline
-on a new trial, for a binary or continuous outcome observed on all patients. It
-does not cover the survivor-effect analysis.
+on a new trial, for a binary or continuous outcome observed on all patients.
 
 If you would like help applying any of this to a trial of your own, please
 [get in touch](../people.qmd).

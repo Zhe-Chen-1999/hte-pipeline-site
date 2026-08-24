@@ -6,8 +6,7 @@ toc: false
 ::: {.hero}
 ## Heterogeneity of treatment effect analysis for randomized trials
 
-Reproducible R Markdown pipelines for exploring treatment effect heterogeneity —
-for outcomes observed on every patient, and for outcomes truncated by death.
+Reproducible R Markdown pipelines for exploring treatment effect heterogeneity.
 
 :::
 
