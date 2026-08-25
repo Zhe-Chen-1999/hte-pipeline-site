@@ -75,8 +75,6 @@ both mortality and non-mortality clinical outcomes, (2) quantify the degree of
 confidence in these conclusions, and (3) identify clinically meaningful
 subgroups most likely to benefit.
 
-## Software and dissemination
+## Analyses
 
-Aim 3 of the project is to develop and disseminate free, cloud-based software to
-support future ARDS trials. This site is part of that aim: the
-[analyses](analyses/index.qmd) are published with their source code.
+[View the analyses →](analyses/index.qmd){.btn .btn-primary}
