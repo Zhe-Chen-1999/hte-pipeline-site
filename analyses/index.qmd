@@ -1,6 +1,6 @@
 ---
 title: "Analyses"
-subtitle: "Reproducible analysis documents, each published with its source code"
+subtitle: "Reproducible analysis documents"
 toc: false
 ---
 
@@ -30,8 +30,7 @@ effects on that stratum.
 
 :::
 
-The [tutorial](../tutorial.qmd) walks through running the HTE analysis pipeline
-on a new trial, for a binary or continuous outcome observed on all patients.
+The [tutorial](../tutorial.qmd) walks through running the HTE analysis pipeline.
 
 If you would like help applying any of this to a trial of your own, please
 [get in touch](../people.qmd).

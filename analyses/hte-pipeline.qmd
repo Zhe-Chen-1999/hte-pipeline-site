@@ -1,6 +1,6 @@
 ---
 title: "HTE analysis pipeline"
-subtitle: "Conditional average effects, subgroup discovery, and randomization-based inference for individual effects"
+subtitle: "Treatment effect heterogeneity when outcomes are observed for all patients"
 toc: false
 ---
 
@@ -29,3 +29,5 @@ Results shown on individual patient data are subject to each trial's data use
 agreement. The source code is openly available so the method can be applied
 elsewhere.
 :::
+
+Want to run this on your own trial? See the [tutorial](../tutorial.qmd).

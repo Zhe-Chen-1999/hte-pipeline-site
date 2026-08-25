@@ -15,7 +15,7 @@ Reproducible R Markdown pipelines for exploring treatment effect heterogeneity.
 Most trials are designed to evaluate the average treatment effect over everyone enrolled.
 But an average effect can conceal meaningful variation: the treatment may help some patients more than others, have little effect for some, or even cause harm.
 
-"Heterogeneity of treatment effect" covers a family of questions about that
+"Heterogeneity of treatment effect" (HTE) covers a family of questions about that
 variation. 
 This pipeline approaches HTE from two complementary perspectives: 
 how the average treatment effect varies with measured baseline characteristics, 

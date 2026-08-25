@@ -35,17 +35,6 @@ varies across.
 | **Step 1** | Estimating the SACE and the conditional SACE with BART, via separate mean models for the potential outcomes and for latent stratum membership |
 | **Step 2** | The "fit-the-fit" approach — a classification and regression tree fitted to the estimated conditional effects, giving interpretable subgroups |
 | **ARDS ARMA data analysis** | The methods applied to the ARDSNetwork ARMA trial of low tidal volume ventilation |
-| **Additional plots** | Supporting figures |
-
-## The motivating application
-
-In the ARDSNetwork ARMA trial, low tidal volume ventilation showed an overall
-benefit for participants with acute lung injury on the outcome of **time to
-returning home**, alongside substantial heterogeneity among always-survivors —
-driven most strongly by **biologic sex** and the **alveolar–arterial oxygen
-gradient at baseline**, a physiologic measure of lung function and degree of
-hypoxemia. Findings of this kind are intended to guide the prognostic enrichment
-of future trials.
 
 ## Relation to the HTE analysis pipeline
 
@@ -59,11 +48,7 @@ that requires:
 | Estimand | conditional average treatment effect | conditional effect among always-survivors |
 | Extra structure needed | none | principal stratification; latent stratum membership modelled |
 
-Because stratum membership is latent and only partially identified from the
-observed data, the randomization-based quantile inference available in Part IV of
-the HTE pipeline does not carry over directly to this setting.
-
-Full methodological detail is in Chen, Harhay, Tong and Li, *A Bayesian machine
-learning approach for estimating heterogeneous survivor causal effects:
-applications to a critical care trial*, **Annals of Applied Statistics**, 2024 —
-listed on the [publications](../publications.qmd) page.
+Full methodological detail is in Chen, Harhay, Tong and Li,
+[*A Bayesian machine learning approach for estimating heterogeneous survivor
+causal effects: applications to a critical care trial*](https://doi.org/10.1214/23-aoas1792),
+**Annals of Applied Statistics**, 2024.
