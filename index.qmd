@@ -88,5 +88,5 @@ conditional effects.
 
 - **[Tutorial](tutorial.qmd)** — A step-by-step guide to running the pipeline on your own trial.
 - **[Analyses](analyses/index.qmd)** — The complete rendered analyses.
-- **[Project](project.qmd)** — The research programme this work belongs to.
+- **[Project](project.qmd)** — Research projects applying these methods.
 - **[People](people.qmd)** — Meet the team and find out how to get in touch.
