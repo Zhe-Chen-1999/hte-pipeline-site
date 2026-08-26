@@ -23,8 +23,7 @@ and how the individual treatment effects are distributed across patients.
 
 ## Two approaches
 
-Both apply when the outcome is observed for every randomized patient. Together
-they make up the **[HTE analysis pipeline](analyses/hte-pipeline.qmd)**.
+Both are implemented in the **[HTE analysis pipeline](analyses/hte-pipeline.qmd)**.
 
 ::: {.card-grid}
 

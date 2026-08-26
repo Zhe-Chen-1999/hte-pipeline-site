@@ -77,9 +77,4 @@ subgroups most likely to benefit.
 
 ## Analyses
 
-- [HTE analysis pipeline](analyses/hte-pipeline.qmd) — treatment effect
-  heterogeneity when outcomes are observed for all patients.
-- [Survivor causal effects](analyses/sace-csace.qmd) — treatment effect
-  heterogeneity when outcomes are truncated by a terminal event.
-
-[View all analyses →](analyses/index.qmd){.btn .btn-primary}
+[SACE analysis using BART →](output/sace-csace.html){.btn .btn-primary target="_blank"}

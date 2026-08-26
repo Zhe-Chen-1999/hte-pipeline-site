@@ -1,6 +1,6 @@
 ---
 title: "HTE analysis pipeline"
-subtitle: "Treatment effect heterogeneity when outcomes are observed for all patients"
+subtitle: "Treatment effect heterogeneity when the outcome is defined for every patient"
 toc: false
 ---
 

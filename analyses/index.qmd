@@ -4,8 +4,8 @@ subtitle: "Reproducible analysis documents"
 toc: false
 ---
 
-Each analysis below is a reproducible document: the methods, the code that ran
-them, and the output in one place. They differ in what the outcome data allow.
+Each analysis below is a reproducible document: the code, the output, and the
+reasoning behind each step in one place. They differ in what the outcome data allow.
 
 ::: {.card-grid}
 
