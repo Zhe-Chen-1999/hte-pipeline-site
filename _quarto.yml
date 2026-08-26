@@ -33,7 +33,7 @@ website:
           - href: analyses/hte-pipeline.qmd
             text: HTE analysis pipeline
           - href: analyses/sace-csace.qmd
-            text: Survivor causal effects
+            text: SACE analysis using BART
       - href: tutorial.qmd
         text: Tutorial
       - href: publications.qmd

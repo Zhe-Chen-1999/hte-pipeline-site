@@ -4,15 +4,15 @@ subtitle: "Reproducible analysis documents"
 toc: false
 ---
 
-Each analysis below is a reproducible document: the code, the output, and the
-reasoning behind each step in one place. They differ in what the outcome data allow.
+Each analysis below is a reproducible document with the code and output in one
+place. They differ in what the outcome data allow.
 
 ::: {.card-grid}
 
 ::: {.analysis-card}
 ### [HTE analysis pipeline](hte-pipeline.qmd)
 
-For outcomes observed on every randomized patient. Conditional average treatment
+For outcomes defined for every patient. Conditional average treatment
 effects estimated with BART, subgroups discovered by fitting a tree to those
 estimates, sensitivity to the prior and to other estimators, heterogeneity by
 prognostic score, and randomization-based bounds on the distribution of
