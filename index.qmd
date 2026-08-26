@@ -73,8 +73,8 @@ itself affected by treatment.
 
 **[Heterogeneous survivor average causal effects](analyses/sace-csace.qmd).**
 Principal stratification defines the estimand on the **always-survivors**
-stratum — participants who would survive under either arm. BART estimates both
-the average and the heterogeneous causal effects there, using separate mean
+stratum — participants who would survive under either arm. BART estimates the
+conditional survivor average causal effects (CSACE) there, using separate mean
 models for the potential outcomes and for latent stratum membership. The
 fit-the-fit step then applies as before, with a tree fitted to the estimated
 conditional effects.

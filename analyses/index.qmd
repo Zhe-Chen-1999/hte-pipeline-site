@@ -24,8 +24,8 @@ individual effects.
 
 For outcomes truncated by a terminal event, where the outcome is undefined or
 unobserved for participants who die. Principal stratification defines the effect
-among always-survivors, and BART estimates both the average and heterogeneous
-effects on that stratum.
+among always-survivors, and BART estimates the conditional average causal effects
+on that stratum.
 :::
 
 :::
